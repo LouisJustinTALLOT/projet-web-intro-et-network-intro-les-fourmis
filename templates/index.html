@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href={{ url_for("static", filename="css/main.css") }}>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        <script type="text/javascript" src={{ url_for("static", filename="js/main.js") }}></script>
+    </head>
+    <body>
+        <div> <b> Rogue Flask </b></div>
+
+        <div class="flexbox">
+            <div class="thekeypad">
+                <div class="key"></div>
+                <div class="key"><input id="go_n" class="keypad_btn" type="button" value="&#9650"> </div>
+                <div class="key"></div>
+                <div class="key"><input id="go_w" class="keypad_btn" type="button" value="&#9664"></div>
+                <div class="key"></div>
+                <div class="key"><input id="go_e" class="keypad_btn" type="button" value="&#9654"></div>
+                <div class="key"></div>
+                <div class="key"><input id="go_s" class="keypad_btn" type="button" value="&#9660"></div>
+                <div class="key"></div>
+            </div>
+
+            <div id="console" style="font-family: monospace;">
+                {% for i in range(n_row) %}
+                <div style="height:18px">
+                    {% for j in range(n_col) %}
+                    <span id="{{ 'cell {}-{}'.format(i,j) }}"> {{ mapdata[i][j] }} </span>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </body>
+</html>
