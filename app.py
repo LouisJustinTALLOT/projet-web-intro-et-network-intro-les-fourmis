@@ -18,9 +18,13 @@ def on_move_msg(json, methods=["GET", "POST"]):
     dx = json['dx']
     dy = json["dy"]
 
-    data, ret = game.move(dx,dy)
-    if ret:
-        socketio.emit("response", data)
+    data_player, ret_player, data_foe, ret_foe = game.move_all(dx, dy)
+
+    if ret_player:
+        socketio.emit("response", data_player)
+
+    if ret_foe:
+        socketio.emit("response", data_foe)
 
 
 if __name__=="__main__":
