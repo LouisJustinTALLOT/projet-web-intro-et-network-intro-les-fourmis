@@ -24,6 +24,15 @@ def on_move_msg(json, methods=["GET", "POST"]):
         if ret:
             socketio.emit("response", data)
 
+@socketio.on("attack")
+def on_attack(json, methods=["GET", "POST"]):
+    player_id = json["ident"]
+    packets = game.attack(player_id)
+
+    for (data, ret) in packets:
+        if ret:
+            socketio.emit("response", data)
+
 
 if __name__=="__main__":
     socketio.run(app, port=5001)

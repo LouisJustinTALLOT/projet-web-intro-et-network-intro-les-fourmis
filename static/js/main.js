@@ -1,4 +1,5 @@
-
+// le joueur correspondant
+var player_id = 0
 
 window.addEventListener("DOMContentLoaded", (event) => {
     var socket = io.connect("http://" + document.domain + ":" + location.port );
@@ -17,6 +18,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
             case 40:
                 socket.emit("move", {dx:0, dy:1});
                 break;
+            case 32:
+                // barre espace
+                socket.emit("attack", {ident:player_id})
         }
 
 
@@ -60,6 +64,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 span_to_modif.textContent = data[i].content;
             }else if(data[i].descr === "earn") {
                 console.log(data[i].ident + " a gagné " + data[i].val)
+                break;
+            }else if(data[i].descr === "fight") {
+                console.log(data[i].ident + " a attaqué " + data[i].target + " et il est mort ?" + data[i].isdead)
                 break;
             }
         }

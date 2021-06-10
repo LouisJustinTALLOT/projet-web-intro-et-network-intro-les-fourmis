@@ -66,6 +66,16 @@ class Game:
 
         return packets
 
+    def attack(self, player_id):
+        player = self._all_players[player_id]
+
+        for foe in self._all_foes:
+            if foe.is_nearby(player):
+                # on attaque ce monstre !
+                return [(self.build_data_attack(foe.name, player_id, not foe._alive), True)]
+
+        return [([], False)]
+
     def find_empty_pos(self, entity):
         """
         Trouve une position libre (ie un ".") sur la carte, puis l'ajoute à la carte.
@@ -105,4 +115,11 @@ class Game:
         return [{"descr": "earn",
                  "ident": f"{player_id}",
                  "val": f"{earned_amount}"},
+                {"foo": "bar"}]
+
+    def build_data_attack(self, foe_name, player_id, is_dead):
+        return [{"descr": "fight",
+                 "ident": f"{player_id}",
+                 "target": f"{foe_name}",
+                 "isdead": f"{is_dead}"},
                 {"foo": "bar"}]
