@@ -50,9 +50,18 @@ window.addEventListener("DOMContentLoaded", (event) => {
     socket.on("response", function(data){
         console.log(data);
         for( var i=0; i<2; i++){
-            var cell_id = "cell " + data[i].i + "-" + data[i].j;
-            var span_to_modif = document.getElementById(cell_id);
-            span_to_modif.textContent = data[i].content;
+            if(data[i].descr === "displacement") {
+                if (data[i].i === -1 && data[i].j === -1) {
+                    // a disparu donc on ne s'en occupe pas
+                    continue;
+                }
+                var cell_id = "cell " + data[i].i + "-" + data[i].j;
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = data[i].content;
+            }else if(data[i].descr === "earn") {
+                console.log(data[i].ident + " a gagné " + data[i].val)
+                break;
+            }
         }
     });
 
