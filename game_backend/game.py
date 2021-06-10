@@ -1,3 +1,5 @@
+from pip._vendor.tenacity import retry_all
+
 from .foe import Foe
 from .map_generator import Generator
 from .player import Player
@@ -10,11 +12,18 @@ class Game:
         self._generator.gen_tiles_level()
         self._map = self._generator.tiles_level
 
-        self._player = Player()
-        self._foe = Foe('Dark Vador', 50, 25, 'D')
+        self._all_players = []
+        self._all_players.append(Player())
+
+        self._all_foes = []
+        self._all_foes.append(Foe('Dark Vador', 50, 25, 'D'))
         # self._player.initPos( self._map )
-        self.find_empty_pos(self._map, entity=self._player)
-        self.find_empty_pos(self._map, entity=self._foe)
+
+        for player in self._all_players:
+            self.find_empty_pos(self._map, entity=player)
+
+        for foe in self._all_foes:
+            self.find_empty_pos(self._map, entity=foe)
 
     def getMap(self):
         return self._map
@@ -32,10 +41,18 @@ class Game:
                         data_foe (pour l'affichage du monstre) et
                         ret_foe (si oui ou non le monstre a bougé))
         """
-        data_player, ret_player =  self._player.move(dx, dy, self._map)
-        data_foe, ret_foe = self._foe.move_foe(self._map)
 
-        return data_player, ret_player, data_foe, ret_foe
+        packets = []
+
+        for player in self._all_players:
+            data_player, ret_player = player.move(dx, dy, self._map)
+            packets.append( (data_player, ret_player) )
+
+        for foe in self._all_foes:
+            data_foe, ret_foe = foe.move_foe(self._map)
+            packets.append( (data_foe, ret_foe))
+
+        return packets
 
     def find_empty_pos(self, _map, entity):
         """
