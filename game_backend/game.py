@@ -31,25 +31,29 @@ class Game:
     def getMap(self):
         return self._map
 
-    def move_all(self, dx, dy):
+    def update_all(self, player_id=None, dx=0, dy=0):
         """
-        Bouge le joueur de dx et de dy, ainsi que les monstres.
-        Modifie les positions sur la carte.
+        Met à jour tous les monstres, les joueurs et les coins.
+        Si player_id != None, alors le joueur correspondant est bougé de dx et de dy.
 
+        :param player_id: l'id du joueur (None si aucun ne bouge)
         :param dx: déplacement en x du joueur
         :param dy: déplacement en y du joueur
         :return: les requêtes à envoyer au joueur
-         (dans l'ordre, data_player (pour l'affichage du joueur),
-                        ret_player (si oui ou non le joueur a bougé),
-                        data_foe (pour l'affichage du monstre) et
-                        ret_foe (si oui ou non le monstre a bougé))
         """
+
+        if player_id != None:
+            if self._all_players[player_id]._alive == False:
+                # il est mort, il ne peut rien faire
+                return
 
         packets = []
 
-        for player in self._all_players.values():
-            data_player, ret_player = player.move(dx, dy, self)
-            packets.append( (data_player, ret_player) )
+        if player_id is not None:
+            player = self._all_players[player_id]
+            if player is not None:
+                data_player, ret_player = player.move(dx, dy, self)
+                packets.append( (data_player, ret_player) )
 
         for coin in self._all_coins:
             id_collected = coin.check_collected(self)
@@ -62,8 +66,8 @@ class Game:
 
         for foe in self._all_foes:
             if foe._alive:
-                data_foe, ret_foe = foe.move_foe(self)
-                packets.append( (data_foe, ret_foe))
+                packets_foe = foe.move_foe(self)
+                packets.extend( packets_foe )
 
         return packets
 
@@ -73,7 +77,7 @@ class Game:
         for foe in self._all_foes:
             if foe._alive and foe.is_nearby(player):
                 # on attaque ce monstre !
-                data_fight = foe.attacked(self)
+                data_fight = foe.attacked(self, 1)
                 return [data_fight,
                         (self.build_data_attack(foe.name, player_id, not foe._alive), True)]
 
@@ -125,4 +129,17 @@ class Game:
                  "ident": f"{player_id}",
                  "target": f"{foe_name}",
                  "isdead": f"{is_dead}"},
+                {"foo": "bar"}]
+
+    def build_data_dead(self, attacker_name, player_id):
+        return [{"descr": "dead",
+                 "attacker": f"{attacker_name}",
+                 "ident": f"{player_id}"},
+                {"foo": "bar"}]
+
+    def build_data_damaged(self, attacker_name, amount, player_id):
+        return [{"descr": "damaged",
+                 "attacker": f"{attacker_name}",
+                 "amount": f"{amount}",
+                 "ident": f"{player_id}"},
                 {"foo": "bar"}]

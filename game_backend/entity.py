@@ -39,6 +39,7 @@ class Player(Entity):
         super().__init__(symbol)
         self._id = id
         self._money = 0
+        self._life_pt = 100
 
     def move(self, dx, dy, game):
         """
@@ -70,6 +71,13 @@ class Player(Entity):
 
     def earn_money(self, _value):
         self._money += _value
+
+    def attacked(self, game, damage, attacker_name):
+        self._life_pt -= damage
+        if self._life_pt <= 0:
+            return [(game.build_data_dead(attacker_name, self._id), True), (self.kill_entity(game), True)]
+        else:
+            return [(game.build_data_damaged(attacker_name, damage, self._id), True)]
 
 
 class Foe(Entity):
@@ -123,7 +131,17 @@ class Foe(Entity):
                     break
 
             if not moved:
-                return [], False
+                # on essaie quand même le dernier déplacement au cas-où (sauf si c'est un cul de sac...)
+                last_try = (-self.last_displacement[0], -self.last_displacement[1])
+                i, j = self._x + last_try[0], self._y + last_try[1]
+                if map[j][i] in ['.', 'x']:
+                    self.last_displacement = last_try
+                    self._x = i
+                    self._y = j
+
+                    this_was_x = (map[j][i] == 'x')
+                else:
+                    return [], False
 
         to_replace = 'x' if self.last_was_x else '.'
 
@@ -134,19 +152,45 @@ class Foe(Entity):
 
         self.last_was_x = this_was_x
 
-        return data_foe, True
+        packets = self.attack(game)
+        packets.insert(0, (data_foe, True))
+
+        # on retourne une liste
+        return packets
 
     def __repr__(self):
         return self.name[0]
 
-    def attacked(self, game):
+    def attacked(self, game, damage):
+        """
+        A lancer lorsque ce monstre est attaqué
+        :param game:
+        :param damage: le montant des dommages
+        :return:
+        """
         print("previous lp :", self.pt_life)
-        self.pt_life -= 1
+        self.pt_life -= damage
         print("now lp :", self.pt_life)
         if self.pt_life <= 0:
             return self.kill_entity(game)
         else:
             return [], False
+
+    def attack(self, game):
+        """
+        A lancer pour que ce monstre attaque.
+
+        :param game:
+        """
+
+        packets = []
+
+        for player in game._all_players.values():
+            if player.is_nearby(self):
+                packets.extend( player.attacked(game, self.strength, self.name) )
+
+        # retourne une liste
+        return packets
 
 
 class Coin(Entity):
