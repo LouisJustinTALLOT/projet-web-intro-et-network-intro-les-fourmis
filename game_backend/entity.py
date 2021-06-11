@@ -19,7 +19,10 @@ class Entity(object):
         self._alive = False
         to_replace = "x" if self.last_was_x else "."
         game.getMap()[self._y][self._x] = to_replace
-        return game.build_data_displacement(-1, -1, " ", self._y, self._x, to_replace), True
+        data = game.build_data_displacement(-1, -1, " ", self._x, self._y, to_replace), True
+        self._x = -1
+        self._y = -1
+        return data
 
     def is_nearby(self, entity):
         return self._x == entity._x and abs(self._y - entity._y) <= 1\
@@ -95,6 +98,9 @@ class Foe(Entity):
         :param map: la carte.
         :return: la requête à envoyer au joueur pour afficher le déplacement
         """
+        if not self._alive:
+            return [], False
+
         this_was_x = False
         map = game.getMap()
 
@@ -132,6 +138,15 @@ class Foe(Entity):
 
     def __repr__(self):
         return self.name[0]
+
+    def attacked(self, game):
+        print("previous lp :", self.pt_life)
+        self.pt_life -= 1
+        print("now lp :", self.pt_life)
+        if self.pt_life <= 0:
+            return self.kill_entity(game)
+        else:
+            return [], False
 
 
 class Coin(Entity):

@@ -16,8 +16,8 @@ class Game:
         self._all_coins.append(Coin())
 
         self._all_foes = []
-        self._all_foes.append(Foe('Dark Vador', 50, 25, 'D'))
-        self._all_foes.append(Foe('Joker', 50, 25, "J"))
+        self._all_foes.append(Foe('Dark Vador', 5, 25, 'D'))
+        self._all_foes.append(Foe('Joker', 2, 25, "J"))
 
         for player in self._all_players.values():
             self.find_empty_pos(entity=player)
@@ -61,8 +61,9 @@ class Game:
 
 
         for foe in self._all_foes:
-            data_foe, ret_foe = foe.move_foe(self)
-            packets.append( (data_foe, ret_foe))
+            if foe._alive:
+                data_foe, ret_foe = foe.move_foe(self)
+                packets.append( (data_foe, ret_foe))
 
         return packets
 
@@ -70,9 +71,11 @@ class Game:
         player = self._all_players[player_id]
 
         for foe in self._all_foes:
-            if foe.is_nearby(player):
+            if foe._alive and foe.is_nearby(player):
                 # on attaque ce monstre !
-                return [(self.build_data_attack(foe.name, player_id, not foe._alive), True)]
+                data_fight = foe.attacked(self)
+                return [data_fight,
+                        (self.build_data_attack(foe.name, player_id, not foe._alive), True)]
 
         return [([], False)]
 

@@ -21,6 +21,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
             case 32:
                 // barre espace
                 socket.emit("attack", {ident:player_id})
+                break;
         }
 
 
@@ -55,13 +56,13 @@ window.addEventListener("DOMContentLoaded", (event) => {
         console.log(data);
         for( var i=0; i<2; i++){
             if(data[i].descr === "displacement") {
-                if (data[i].i === -1 && data[i].j === -1) {
-                    // a disparu donc on ne s'en occupe pas
-                    continue;
+                if (data[i].i !== "-1" && data[i].j !== "-1") {
+                    // n'a pas disparu donc on s'en occupe
+                    var cell_id = "cell " + data[i].i + "-" + data[i].j;
+                    console.log(cell_id);
+                    var span_to_modif = document.getElementById(cell_id);
+                    span_to_modif.textContent = data[i].content;
                 }
-                var cell_id = "cell " + data[i].i + "-" + data[i].j;
-                var span_to_modif = document.getElementById(cell_id);
-                span_to_modif.textContent = data[i].content;
             }else if(data[i].descr === "earn") {
                 console.log(data[i].ident + " a gagné " + data[i].val)
                 break;
