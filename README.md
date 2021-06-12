@@ -16,7 +16,7 @@ Et ensuite dans le navigateur allez à l'url `localhost:5001` vous verrez alors 
 ![](media/demo.png)
 
 
-Vous pouvez alors déplacer le personnage (symboliser par un `@`) à l'aide des boutons de navigations ou des fleches de votre clavier. 
+Vous pouvez alors déplacer le personnage (symbolisé par un `@`) à l'aide des boutons de navigations ou des fleches de votre clavier. 
 
 ## Description du code 
 
@@ -32,11 +32,11 @@ Dans templates vous avez la page html et dans `static/js` les quelques fonctions
 
 Pour rappel le travail attendu est d'enrichir ce squelette de code de la manière suivante (trié par ordre croissant d'importance) : 
 
-1. Ajout de monstre/trésors/équipements apparents et/ou cachés sur la map 
+1. Ajout de monstres/trésors/équipements apparents et/ou cachés sur la map 
 2. Ajout d'un mode multi-joueur (possibilité pour les joueurs de s'attaquer entre eux) 
 3. Amélioration de l'interface côté joueur (j'ai fait un html pas très beau à vous de faire mieux) 
 4. Système de niveau (pour le mode joueur unique) 
-5. Possibilité de sauvergarder sa partie et de revenir plus tard (pour le mode jouer unique)  
+5. Possibilité de sauvergarder sa partie et de revenir plus tard (pour le mode joueur unique)  
 
 Pour la notation, histoire qu'il n'y ait pas de surprise, voici les règles : 
 * Si le point (1) est traité => 10/20 

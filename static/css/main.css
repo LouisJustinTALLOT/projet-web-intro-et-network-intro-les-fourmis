@@ -1,5 +1,11 @@
 body{
-    background-color: slategray;
+    background-color:blanchedalmond;
+}
+
+#titre{
+    text-align: center;
+    color:rgb(2, 167, 170);
+    margin-bottom: 20px;
 }
 
 .flexbox{
@@ -13,11 +19,49 @@ body{
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: 35px;
     grid-gap: 5px;
-    max-width:120px;
+    max-width:120px; 
+    margin-right: 10px;
 }
 
 .keypad_btn{
     background-color: black;
     opacity: 0.75;
+    color: cyan;
+}
+
+#console{
+    background-color: cadetblue;
+}
+
+div.ligne{
+    display: flex
+}
+
+span.\#{
+    background-color:black; 
+    color:black;
+}
+
+span.\@{
+    background-color:gold;
+    color:gold;
+}
+
+span.D{
+    background-color:crimson;
+    color: crimson;
+}
+
+span.\={
+    background-color:darkblue;
+    color: darkblue;
+}
+
+span.\.{
+    background-color:cyan;
+    color: cyan;
+}
+span.x{
+    background-color:cyan;
     color: cyan;
 }

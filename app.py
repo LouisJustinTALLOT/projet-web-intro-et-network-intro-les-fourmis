@@ -14,7 +14,7 @@ def index():
 
 @socketio.on("move")
 def on_move_msg(json, methods=["GET", "POST"]):
-    print("received move ws message")
+    # print("received move ws message")
     dx = json['dx']
     dy = json["dy"]
 
