@@ -10,14 +10,15 @@ class Game:
         self._map = self._generator.tiles_level
 
         self._all_players = {}
-        self._all_players[0] = Player(0)
+        symbol = "@0"
+        self._all_players[0] = Player(0, symbol)
 
         self._all_coins = []
         self._all_coins.append(Coin())
 
         self._all_foes = []
-        self._all_foes.append(Foe('Dark Vador', 5, 25, 'D'))
-        self._all_foes.append(Foe('Joker', 2, 25, "J"))
+        self._all_foes.append(Foe('Dark Vador', 5, 25, 'DV'))
+        self._all_foes.append(Foe('Joker', 2, 25, "Jo"))
 
         for player in self._all_players.values():
             self.find_empty_pos(entity=player)
@@ -85,7 +86,7 @@ class Game:
 
     def find_empty_pos(self, entity):
         """
-        Trouve une position libre (ie un ".") sur la carte, puis l'ajoute à la carte.
+        Trouve une position libre (ie un "..") sur la carte, puis l'ajoute à la carte.
 
         :param _map: la carte.
         :param entity: l'entité (un joueur, un monstre, etc.). Doit hériter de Entity
@@ -98,7 +99,7 @@ class Game:
         while found is False:
             y_init += 1
             for i, c in enumerate(self._map[y_init]):
-                if c == ".":
+                if c == "..":
                     x_init = i
                     found = True
                     break

@@ -1,6 +1,6 @@
 import random
 
-symbol_coin = "o"
+symbol_coin = "co"
 
 class Entity(object):
     def __init__(self, symbol):
@@ -17,7 +17,7 @@ class Entity(object):
 
     def kill_entity(self, game):
         self._alive = False
-        to_replace = "x" if self.last_was_x else "."
+        to_replace = "xx" if self.last_was_x else ".."
         game.getMap()[self._y][self._x] = to_replace
         data = game.build_data_displacement(-1, -1, " ", self._x, self._y, to_replace), True
         self._x = -1
@@ -30,7 +30,7 @@ class Entity(object):
 
 
 class Player(Entity):
-    def __init__(self, id, symbol="@"):
+    def __init__(self, id, symbol):
         """
         Créé le joueur
 
@@ -56,11 +56,11 @@ class Player(Entity):
 
         map = game.getMap()
 
-        if map[new_y][new_x] == "." or map[new_y][new_x] == "x" or map[new_y][new_x] == symbol_coin:
+        if map[new_y][new_x] == ".." or map[new_y][new_x] == "xx" or map[new_y][new_x] == symbol_coin:
             ret =True
             map[new_y][new_x] = self._symbol
-            map[self._y][self._x] = "x"
-            data = game.build_data_displacement(new_x, new_y, self._symbol, self._x, self._y, "x")
+            map[self._y][self._x] = "xx"
+            data = game.build_data_displacement(new_x, new_y, self._symbol, self._x, self._y, "xx")
             self._x = new_x
             self._y = new_y
         else:
@@ -83,7 +83,7 @@ class Player(Entity):
 class Foe(Entity):
     def __init__(self, name, pt_life, strength, symbol, last_displacement=None):
         """
-        Créé un nouveau monstre
+        Crée un nouveau monstre
 
         :param name: son nom.
         :param pt_life: ses points de vie.
@@ -121,29 +121,29 @@ class Foe(Entity):
             random.shuffle(vectors)
             for vector in vectors:
                 i, j = self._x + vector[0], self._y + vector[1]
-                if map[j][i] in ['.', 'x']:
+                if map[j][i] in ['..', 'xx']:
                     self.last_displacement = vector
                     self._x = i
                     self._y = j
                     moved = True
 
-                    this_was_x = (map[j][i] == 'x')
+                    this_was_x = (map[j][i] == 'xx')
                     break
 
             if not moved:
                 # on essaie quand même le dernier déplacement au cas-où (sauf si c'est un cul de sac...)
                 last_try = (-self.last_displacement[0], -self.last_displacement[1])
                 i, j = self._x + last_try[0], self._y + last_try[1]
-                if map[j][i] in ['.', 'x']:
+                if map[j][i] in ['..', 'xx']:
                     self.last_displacement = last_try
                     self._x = i
                     self._y = j
 
-                    this_was_x = (map[j][i] == 'x')
+                    this_was_x = (map[j][i] == 'xx')
                 else:
                     return [], False
 
-        to_replace = 'x' if self.last_was_x else '.'
+        to_replace = 'xx' if self.last_was_x else '..'
 
         map[self._y][self._x] = self._symbol
         map[self._y - self.last_displacement[1]][self._x - self.last_displacement[0]] = to_replace

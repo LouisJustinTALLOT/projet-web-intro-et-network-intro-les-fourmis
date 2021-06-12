@@ -61,20 +61,24 @@ window.addEventListener("DOMContentLoaded", (event) => {
                     var cell_id = "cell " + data[i].i + "-" + data[i].j;
                     // console.log(cell_id);
                     var span_to_modif = document.getElementById(cell_id);
-                    symbole =  data[i].content;
-                    span_to_modif.className = symbole;
-                    span_to_modif.textContent = symbole+symbole;
+                    symbole = data[i].content;
+                    span_to_modif.className = data[i].content;
+                    span_to_modif.textContent = data[i].content;
                 }
-            }else if(data[i].descr === "earn") {
+            }
+            else if(data[i].descr === "earn") {
                 console.log(data[i].ident + " a gagné " + data[i].val)
                 break;
-            }else if(data[i].descr === "fight") {
+            }
+            else if(data[i].descr === "fight") {
                 console.log("Le joueur" + data[i].ident + " a attaqué le monstre " + data[i].target + " et il est mort ?" + data[i].isdead)
                 break;
-            }else if (data[i].descr === "dead") {
+            }
+            else if (data[i].descr === "dead") {
                 console.log("Le monstre " + data[i].attacker + " a tué le joueur " + data[i].ident);
                 break;
-            }else if (data[i].descr === "damaged") {
+            }
+            else if (data[i].descr === "damaged") {
                 console.log("Le monstre " + data[i].attacker + " a fait des dommages au joueur " + data[i].ident + " (" + data[i].amount + " pts de vie)");
                 break;
             }

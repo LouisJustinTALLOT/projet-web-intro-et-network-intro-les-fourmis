@@ -11,11 +11,11 @@
 from __future__ import print_function
 import random
 
-CHARACTER_TILES = {'stone': '#',
+CHARACTER_TILES = {'stone': '##',
 
-                    'floor': '.',
+                    'floor': '..',
 
-                    'wall': '='}
+                    'wall': '=='}
 
 class Generator():
     def __init__(self, width=64, height=64, max_rooms=15, min_room_xy=5, max_room_xy=10, rooms_overlap=False, random_connections=1,random_spurs=3, tiles=CHARACTER_TILES):

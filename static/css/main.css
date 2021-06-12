@@ -37,31 +37,41 @@ div.ligne{
     display: flex
 }
 
-span.\#{
+span.\#\#{
     background-color:black; 
     color:black;
 }
 
-span.\@{
+span.\@0{
+    background-color:rgb(2, 182, 83);
+    color:rgb(2, 182, 83);
+}
+
+
+span.co{
     background-color:gold;
     color:gold;
 }
 
-span.D{
+span.DV{
     background-color:crimson;
     color: crimson;
 }
+span.Jo{
+    background-color:red;
+    color: red
+}
 
-span.\={
+span.\=\={
     background-color:darkblue;
     color: darkblue;
 }
 
-span.\.{
+span.\.\.{
     background-color:cyan;
     color: cyan;
 }
-span.x{
+span.xx{
     background-color:cyan;
     color: cyan;
 }
