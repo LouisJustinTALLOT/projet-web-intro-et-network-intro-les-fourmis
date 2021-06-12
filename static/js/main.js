@@ -76,10 +76,19 @@ window.addEventListener("DOMContentLoaded", (event) => {
             }
             else if (data[i].descr === "dead") {
                 console.log("Le monstre " + data[i].attacker + " a tué le joueur " + data[i].ident);
+                var cell_id = "vie" + data[i].ident;
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = " ";
+                var cell_id = "vie";
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = "Dead";
                 break;
             }
             else if (data[i].descr === "damaged") {
                 console.log("Le monstre " + data[i].attacker + " a fait des dommages au joueur " + data[i].ident + " (" + data[i].amount + " pts de vie)");
+                var cell_id = "vie" + data[i].ident;
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = data[i].life;
                 break;
             }
         }

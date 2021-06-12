@@ -30,6 +30,20 @@
                 </div>
                 {% endfor %}
             </div>
+
+        </div>
+        <div id="infos">
+            {% for i in range(n_players) %}
+            <div id="joueur">
+                <span id="ident">
+                    Player {{i+1}}
+                </span>
+                <span id="vie">
+                    <span> life : </span>
+                    <span id="{{'vie{}'.format(i)}}"> {{'{}'.format(players[i]._life_pt) }} </span>
+                </span>
+            </div>
+            {% endfor %}
         </div>
         </div>
 

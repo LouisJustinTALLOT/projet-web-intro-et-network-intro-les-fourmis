@@ -10,7 +10,7 @@ game = Game()
 @app.route("/")
 def index():
     map = game.getMap()
-    return render_template("index.html", mapdata=map, n_row=len(map), n_col=len(map[0]) )
+    return render_template("index.html", mapdata=map, n_row=len(map), n_col=len(map[0]), players=game._all_players, n_players=len(game._all_players) )
 
 @socketio.on("move")
 def on_move_msg(json, methods=["GET", "POST"]):

@@ -138,9 +138,10 @@ class Game:
                  "ident": f"{player_id}"},
                 {"foo": "bar"}]
 
-    def build_data_damaged(self, attacker_name, amount, player_id):
+    def build_data_damaged(self, attacker_name, amount, life, player_id):
         return [{"descr": "damaged",
                  "attacker": f"{attacker_name}",
                  "amount": f"{amount}",
+                 "life": f"{life}",
                  "ident": f"{player_id}"},
                 {"foo": "bar"}]

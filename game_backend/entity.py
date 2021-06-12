@@ -77,7 +77,7 @@ class Player(Entity):
         if self._life_pt <= 0:
             return [(game.build_data_dead(attacker_name, self._id), True), (self.kill_entity(game), True)]
         else:
-            return [(game.build_data_damaged(attacker_name, damage, self._id), True)]
+            return [(game.build_data_damaged(attacker_name, damage, self._life_pt, self._id), True)]
 
 
 class Foe(Entity):
