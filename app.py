@@ -17,14 +17,28 @@ def on_move_msg(json, methods=["GET", "POST"]):
     # print("received move ws message")
     dx = json['dx']
     dy = json["dy"]
+    player_id = json["ident"]
 
-    data_player, ret_player, data_foe, ret_foe = game.move_all(dx, dy)
+    packets = game.update_all(player_id, dx, dy)
 
-    if ret_player:
-        socketio.emit("response", data_player)
+    for (data, ret) in packets:
+        if ret:
+            print(data)
+            socketio.emit("response", data)
 
-    if ret_foe:
-        socketio.emit("response", data_foe)
+@socketio.on("attack")
+def on_attack(json, methods=["GET", "POST"]):
+    player_id = json["ident"]
+    packets0 = game.attack(player_id)
+    packets1 = game.update_all(None)
+
+    for (data, ret) in packets0:
+        if ret:
+            socketio.emit("response", data)
+
+    for (data, ret) in packets1:
+        if ret:
+            socketio.emit("response", data)
 
 
 if __name__=="__main__":
