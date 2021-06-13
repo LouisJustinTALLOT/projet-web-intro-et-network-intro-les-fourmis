@@ -100,18 +100,21 @@ window.addEventListener("load", (event) => {
                 break;
             }
             else if (data[i].descr === "dead") {
-                console.log("Le monstre " + data[i].attacker + " a tué le joueur " + data[i].ident);
+                console.log(data[i].attacker + " a tué le joueur " + data[i].ident);
                 var cell_id = "vie" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
                 span_to_modif.textContent = "Dead";
 
-                var cell_id = "respawn"+ data[i].ident;
-                var btn_respawn = document.getElementById(cell_id);
-                btn_respawn.onclick = function() {
+
+                if (data[i].ident == player_id) {
+                    var cell_id = "respawn"+ data[i].ident;
+                    var btn_respawn = document.getElementById(cell_id);
+                    btn_respawn.onclick = function() {
                     console.log("respawning ... ");
                     socket.emit("respawn", {ident: player_id});
-                }; 
-                btn_respawn.style= "display:inline";
+                    };
+                    btn_respawn.style= "display:inline";
+                }
                 break;
             }
             else if (data[i].descr === "damaged") {
