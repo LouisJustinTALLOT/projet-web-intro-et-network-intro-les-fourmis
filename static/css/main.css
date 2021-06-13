@@ -47,8 +47,8 @@ span.\#\#{
 }
 
 span.\@0{
-    background-color:rgb(2, 182, 83);
-    color:rgb(2, 182, 83);
+    background-color:rgb(10, 140, 100);
+    color:rgb(10, 140, 100);
 }
 
 
@@ -78,17 +78,17 @@ span.Go{
 
 
 span.\=\={
-    background-color:darkblue;
-    color: darkblue;
+    background-color:rgb(20, 20, 220);
+    color: rgb(20, 20, 220);
 }
 
 span.\.\.{
-    background-color:cyan;
-    color: cyan;
+    background-color:rgb(100, 255, 255);
+    color: rgb(100, 255, 255);
 }
 span.xx{
-    background-color:cyan;
-    color: cyan;
+    background-color:rgb(100, 255, 255);
+    color:rgb(100, 255, 255);
 }
 
 div#infos{
