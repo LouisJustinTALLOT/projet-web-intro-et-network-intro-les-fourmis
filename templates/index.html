@@ -39,15 +39,19 @@
                 <span id="ident">
                     Player {{i+1}}
                 </span>
-                <span id="{{'vie{}'.format(i)}}">
+                <span id="vie">
+                    <span id="{{'vie{}'.format(i)}}">
                     Life : {{'{}'.format(players[i]._life_pt) }}
+                    </span> 
+                    <button id="respawn" class="bouton" style="display: none">Revivre</button>
+                </span>
+                <span id="{{'gold{}'.format(i)}}">
+                    Gold : {{'{}'.format(players[i]._money) }}
                 </span>
             </div>
             {% endfor %}
         </div>
         <br />
-
-        <button id="respawn" class="bouton">Revivre</button>
 
     </div>
 

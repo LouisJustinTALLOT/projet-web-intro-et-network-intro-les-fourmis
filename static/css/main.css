@@ -31,7 +31,7 @@ body{
 
 
 div.ligne{
-    display: flex
+    display: flex;
 }
 
 span.\#\#{
@@ -51,8 +51,8 @@ span.co{
 }
 
 span.DV{
-    background-color:crimson;
-    color: crimson;
+    background-color:rgb(250, 45, 86);
+    color: rgb(250, 45, 86);
 }
 span.Jo{
     background-color:red;

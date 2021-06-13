@@ -74,6 +74,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
             }
             else if(data[i].descr === "earn") {
                 console.log(data[i].ident + " a gagné " + data[i].val)
+                var cell_id = "gold" + data[i].ident;
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = "Gold : " + data[i].money;
                 break;
             }
             else if(data[i].descr === "fight") {
@@ -85,6 +88,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 var cell_id = "vie" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
                 span_to_modif.textContent = "Dead";
+                var cell_id = "respawn";
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.style= "display:inline";
                 break;
             }
             else if (data[i].descr === "damaged") {
@@ -96,6 +102,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
             }
             else if (data[i].descr === "respawn") {
                 console.log("Le joueur "+ data[i].ident + " respawn");
+                var cell_id = "respawn";
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.style= "display:none";
 
                 // on refait apparaître le joueur
                 var cell_id = "cell " + data[i].i + "-" + data[i].j;

@@ -71,7 +71,7 @@ class Game:
             if not id_collected == None:
                 coin.kill_entity(self)
                 self._all_players[id_collected].earn_money(coin._value)
-                packets.append( ((self.build_data_earn(id_collected, coin._value)), True) )
+                packets.append( ((self.build_data_earn(id_collected, coin._value, self._all_players[id_collected]._money)), True) )
 
 
 
@@ -140,10 +140,11 @@ class Game:
                  "j": f"{new_x}",
                  "content": new_content}]
 
-    def build_data_earn(self, player_id, earned_amount):
+    def build_data_earn(self, player_id, earned_amount, total):
         return [{"descr": "earn",
                  "ident": f"{player_id}",
-                 "val": f"{earned_amount}"},
+                 "val": f"{earned_amount}",
+                 "money": f"{total}"},
                 {"foo": "bar"}]
 
     def build_data_attack(self, foe_name, player_id, is_dead):
