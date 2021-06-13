@@ -1,6 +1,7 @@
 import random
 
 symbol_coin = "co"
+symbol_next_level = "nl"
 
 class Entity(object):
     def __init__(self, symbol):
@@ -56,7 +57,7 @@ class Player(Entity):
 
         map = game.getMap()
 
-        if map[new_y][new_x] == ".." or map[new_y][new_x] == "xx" or map[new_y][new_x] == symbol_coin:
+        if map[new_y][new_x] == ".." or map[new_y][new_x] == "xx" or map[new_y][new_x] in [symbol_coin, symbol_next_level]:
             ret =True
             map[new_y][new_x] = self._symbol
             map[self._y][self._x] = "xx"
@@ -220,3 +221,6 @@ class Coin(Entity):
         return None
 
 
+class NextLevel(Coin):
+    def __init__(self, symbol=symbol_next_level):
+        super().__init__(symbol=symbol)

@@ -2,7 +2,7 @@ from random import random, randrange
 from typing import Dict
 
 from .map_generator import Generator
-from .entity import Player, Foe, Coin
+from .entity import NextLevel, Player, Foe, Coin
 
 
 class Game:
@@ -15,8 +15,11 @@ class Game:
         self._all_players: Dict[int, Player] = {} 
         self._nb_players = -1
 
+        self._current_level = 1
+
         self._all_coins = []
         self._all_foes = []
+        self._next_level = NextLevel()
 
         self._all_coins.append(Coin())
         self._all_coins.append(Coin())
@@ -37,6 +40,8 @@ class Game:
 
         for foe in self._all_foes:
             self.find_empty_pos(entity=foe)
+
+        self.find_empty_pos(entity=self._next_level) 
 
     def add_new_player(self):
         symbol = "@0"
@@ -80,6 +85,14 @@ class Game:
                 self._all_players[id_collected].earn_money(coin._value)
                 packets.append( ((self.build_data_earn(id_collected, coin._value, self._all_players[id_collected]._money)), True) )
 
+        id_next_level = self._next_level.check_collected(self)
+        if id_next_level is not None:
+            print("here")
+            self._current_level += 1
+            self._next_level.kill_entity(self)
+            packets.append(
+                ((self.build_data_next_level(id_next_level)), True)
+            )
 
 
         for foe in self._all_foes:
@@ -205,6 +218,16 @@ class Game:
                 "j": f"{x}",
                 "ident": f"{player_id}",
                 "content": f"{content}"
+            },
+            {"foo": "bar"}
+        ]
+
+    def build_data_next_level(self, player_id):
+        return [
+            {
+                "descr": "next_level",
+                "ident": f"{player_id}",
+                "no_new_level": f"{self._current_level}"
             },
             {"foo": "bar"}
         ]

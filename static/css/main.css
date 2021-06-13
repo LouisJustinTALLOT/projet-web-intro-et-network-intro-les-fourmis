@@ -11,6 +11,7 @@ body{
 }
 
 #evenements{
+    display: inline-block;
     text-align: center;
     background-color:lightyellow;
     border: 3px solid lightsalmon;
@@ -45,6 +46,11 @@ div.ligne{
 
 #console {
     user-select: none;
+}
+
+#currrent_level {
+    display: inline-block;
+    font-size: 16px;
 }
 
 span.\#\#{
