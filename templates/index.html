@@ -38,9 +38,8 @@
                 <span id="ident">
                     Player {{i+1}}
                 </span>
-                <span id="vie">
-                    <span> life : </span>
-                    <span id="{{'vie{}'.format(i)}}"> {{'{}'.format(players[i]._life_pt) }} </span>
+                <span id="{{'vie{}'.format(i)}}">
+                    <span> life : {{'{}'.format(players[i]._life_pt) }} </span>
                 </span>
             </div>
             {% endfor %}

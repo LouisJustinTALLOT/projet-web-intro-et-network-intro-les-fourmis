@@ -78,9 +78,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 console.log("Le monstre " + data[i].attacker + " a tué le joueur " + data[i].ident);
                 var cell_id = "vie" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
-                span_to_modif.textContent = " ";
-                var cell_id = "vie";
-                var span_to_modif = document.getElementById(cell_id);
                 span_to_modif.textContent = "Dead";
                 break;
             }
@@ -88,7 +85,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 console.log("Le monstre " + data[i].attacker + " a fait des dommages au joueur " + data[i].ident + " (" + data[i].amount + " pts de vie)");
                 var cell_id = "vie" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
-                span_to_modif.textContent = data[i].life;
+                span_to_modif.textContent = "life : " + data[i].life;
                 break;
             }
         }
