@@ -43,6 +43,10 @@ div.ligne{
     display: flex;
 }
 
+#console {
+    user-select: none;
+}
+
 span.\#\#{
     background-color:black; 
     color:black;
