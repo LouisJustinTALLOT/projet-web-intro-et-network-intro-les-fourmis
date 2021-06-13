@@ -109,6 +109,9 @@ class Foe(Entity):
         if not self._alive:
             return [], False
 
+        # On commence par le faire attaquer
+        packets = self.attack(game)
+
         this_was_x = False
         map = game.getMap()
 
@@ -155,7 +158,8 @@ class Foe(Entity):
 
         self.last_was_x = this_was_x
 
-        packets = self.attack(game)
+        packets.extend(self.attack(game))
+
         packets.insert(0, (data_foe, True))
 
         # on retourne une liste
