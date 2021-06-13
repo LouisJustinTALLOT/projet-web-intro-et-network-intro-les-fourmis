@@ -90,19 +90,28 @@ class Game:
         return packets
 
     def attack(self, player_id):
+        packets = []
+
         player = self._all_players[player_id]
 
         if player._alive == False:
-            return []
+            return packets
 
         for foe in self._all_foes:
             if foe._alive and foe.is_nearby(player):
                 # on attaque ce monstre !
                 data_fight = foe.attacked(self, 1)
-                return [data_fight,
-                        (self.build_data_attack(foe.name, player_id, not foe._alive), True)]
+                packets.append(data_fight)
+                packets.append( (self.build_data_attack(foe.name, player_id, not foe._alive), True) )
 
-        return [([], False)]
+        for other_player in self._all_players.values():
+            if other_player == player:
+                continue
+            if other_player._alive and other_player.is_nearby(player):
+                # on attaque ce joueur
+                packets.extend(other_player.attacked(self, 10, "Joueur " + str(player_id)))
+
+        return packets
 
     def find_empty_pos(self, entity):
         """
