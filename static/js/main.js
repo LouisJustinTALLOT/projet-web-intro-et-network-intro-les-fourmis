@@ -66,13 +66,6 @@ window.addEventListener("load", (event) => {
         socket.emit("move", {ident: player_id, dx:1, dy:0});
     };
 
-
-    var btn_respawn = document.getElementById("respawn");
-    btn_respawn.onclick = function(e) {
-        console.log("respawning ... ");
-        socket.emit("respawn", {ident: player_id});
-    }; 
-
     socket.on("response", function(data){
         // console.log(data);
         for( var i=0; i<2; i++){
@@ -111,9 +104,14 @@ window.addEventListener("load", (event) => {
                 var cell_id = "vie" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
                 span_to_modif.textContent = "Dead";
-                var cell_id = "respawn";
-                var span_to_modif = document.getElementById(cell_id);
-                span_to_modif.style= "display:inline";
+
+                var cell_id = "respawn"+ data[i].ident;
+                var btn_respawn = document.getElementById(cell_id);
+                btn_respawn.onclick = function() {
+                    console.log("respawning ... ");
+                    socket.emit("respawn", {ident: player_id});
+                }; 
+                btn_respawn.style= "display:inline";
                 break;
             }
             else if (data[i].descr === "damaged") {
@@ -125,7 +123,7 @@ window.addEventListener("load", (event) => {
             }
             else if (data[i].descr === "respawn") {
                 console.log("Le joueur "+ data[i].ident + " respawn");
-                var cell_id = "respawn";
+                var cell_id = "respawn" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
                 span_to_modif.style= "display:none";
 
