@@ -38,14 +38,17 @@
                 <span id="ident">
                     Player {{i+1}}
                 </span>
-                <span id="vie">
-                    <span> life : </span>
-                    <span id="{{'vie{}'.format(i)}}"> {{'{}'.format(players[i]._life_pt) }} </span>
+                <span id="{{'vie{}'.format(i)}}">
+                    Life : {{'{}'.format(players[i]._life_pt) }}
                 </span>
             </div>
             {% endfor %}
         </div>
-        </div>
+        <br />
+
+        <button id="respawn" class="bouton">Revivre</button>
+
+    </div>
 
     </body>
 </html>

@@ -52,6 +52,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
     };
 
 
+    var btn_respawn = document.getElementById("respawn");
+    btn_respawn.onclick = function(e) {
+        console.log("respawning ... ");
+        socket.emit("respawn", {ident: player_id});
+    }; 
+
     socket.on("response", function(data){
         // console.log(data);
         for( var i=0; i<2; i++){
@@ -78,9 +84,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 console.log("Le monstre " + data[i].attacker + " a tué le joueur " + data[i].ident);
                 var cell_id = "vie" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
-                span_to_modif.textContent = " ";
-                var cell_id = "vie";
-                var span_to_modif = document.getElementById(cell_id);
                 span_to_modif.textContent = "Dead";
                 break;
             }
@@ -88,7 +91,24 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 console.log("Le monstre " + data[i].attacker + " a fait des dommages au joueur " + data[i].ident + " (" + data[i].amount + " pts de vie)");
                 var cell_id = "vie" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
-                span_to_modif.textContent = data[i].life;
+                span_to_modif.textContent = "Life : " + data[i].life;
+                break;
+            }
+            else if (data[i].descr === "respawn") {
+                console.log("Le joueur "+ data[i].ident + " respawn");
+
+                // on refait apparaître le joueur
+                var cell_id = "cell " + data[i].i + "-" + data[i].j;
+                var span_to_modif = document.getElementById(cell_id);
+                symbole = data[i].content;
+                span_to_modif.className = data[i].content;
+                span_to_modif.textContent = data[i].content;
+
+                // on affiche ses nouveaux PV
+                var cell_id = "vie"+ data[i].ident;
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = "Life : " + data[i].life ;
+
                 break;
             }
         }
