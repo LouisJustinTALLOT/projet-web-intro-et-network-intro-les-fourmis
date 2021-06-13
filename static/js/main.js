@@ -30,25 +30,25 @@ window.addEventListener("DOMContentLoaded", (event) => {
     var btn_n = document.getElementById("go_n");
     btn_n.onclick = function(e) {
         // console.log("Clicked on button north");
-        socket.emit("move", {dx:0, dy:-1});
+        socket.emit("move", {ident: player_id, dx:0, dy:-1});
     };
 
     var btn_s = document.getElementById("go_s");
     btn_s.onclick = function(e) {
         // console.log("Clicked on button south");
-        socket.emit("move", {dx:0, dy:1});
+        socket.emit("move", {ident: player_id, dx:0, dy:1});
     };
 
     var btn_w = document.getElementById("go_w");
     btn_w.onclick = function(e) {
         // console.log("Clicked on button w");
-        socket.emit("move", {dx:-1, dy:0});
+        socket.emit("move", {ident: player_id, dx:-1, dy:0});
     };
 
     var btn_e = document.getElementById("go_e");
     btn_e.onclick = function(e) {
         // console.log("Clicked on button e");
-        socket.emit("move", {dx:1, dy:0});
+        socket.emit("move", {ident: player_id, dx:1, dy:0});
     };
 
 
