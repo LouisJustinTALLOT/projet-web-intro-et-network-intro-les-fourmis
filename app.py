@@ -6,11 +6,29 @@ app = Flask(__name__)
 socketio = SocketIO(app)
 game = Game()
 
+player_id = -1
+
+@socketio.on("login")
+def send_player_id(json, methods=["GET", "POST"]):
+    data = [
+        {
+            "descr": "send_player_id",
+            "id": player_id
+        },
+        {"foo": "bar"}
+    ]
+    print("sending id to new player... ", player_id)
+    socketio.emit("response", data)
 
 @app.route("/")
 def index():
+    global player_id
+    player_id = game.add_new_player()
+    print("new player : ", player_id)
+
     map = game.getMap()
-    return render_template("index.html", mapdata=map, n_row=len(map), n_col=len(map[0]), players=game._all_players, n_players=len(game._all_players) )
+    return render_template("index.html", mapdata=map, n_row=len(map), n_col=len(map[0]), players=game._all_players, n_players=game._nb_players )
+
 
 @socketio.on("move")
 def on_move_msg(json, methods=["GET", "POST"]):

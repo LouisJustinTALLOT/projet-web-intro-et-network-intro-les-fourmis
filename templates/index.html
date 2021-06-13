@@ -34,13 +34,13 @@
 
         </div>
         <div id="infos">
-            {% for i in range(n_players) %}
+            {% for i, player in players.items() %}
             <div id="joueur">
                 <span id="ident">
                     Player {{i+1}}
                 </span>
                 <span id="{{'vie{}'.format(i)}}">
-                    Life : {{'{}'.format(players[i]._life_pt) }}
+                    Life : {{'{}'.format(player._life_pt) }}
                 </span>
             </div>
             {% endfor %}

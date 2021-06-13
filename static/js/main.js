@@ -1,10 +1,25 @@
 // le joueur correspondant
-var player_id = 0
+
+var player_id = -1
+
 
 window.addEventListener("DOMContentLoaded", (event) => {
     var socket = io.connect("http://" + document.domain + ":" + location.port );
 
+    console.log("document login ");
+    socket.emit("login", {})
+
+})
+
+
+window.addEventListener("load", (event) => {
+
+    // socket.emit("login");
+
+    var socket = io.connect("http://" + document.domain + ":" + location.port );
+
     document.onkeydown = function(e){
+        console.log("player_id ", player_id);
         switch(e.keyCode){
             case 37:
                 socket.emit("move", {ident: player_id, dx:-1, dy:0});
@@ -71,6 +86,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
                     span_to_modif.className = data[i].content;
                     span_to_modif.textContent = data[i].content;
                 }
+            } else if (data[i].descr === "send_player_id") {
+                console.log("ici, ", player_id)
+                if (player_id === -1) {
+                    console.log("here ", player_id)
+                    console.log(data[i].id)
+                    player_id = parseInt(data[i].id);
+                }
+                break;
             }
             else if(data[i].descr === "earn") {
                 console.log(data[i].ident + " a gagné " + data[i].val)
