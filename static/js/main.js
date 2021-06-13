@@ -41,19 +41,24 @@ window.addEventListener("load", (event) => {
         console.log("player_id ", player_id);
         switch(e.keyCode){
             case 37:
+                e.preventDefault();
                 socket.emit("move", {ident: player_id, dx:-1, dy:0});
                 break;
             case 38:
+                e.preventDefault();
                 socket.emit("move", {ident: player_id, dx:0, dy:-1});
                 break;
             case 39:
+                e.preventDefault();
                 socket.emit("move", {ident: player_id, dx:1, dy:0});
                 break;
             case 40:
+                e.preventDefault();
                 socket.emit("move", {ident: player_id, dx:0, dy:1});
                 break;
             case 32:
                 // barre espace
+                e.preventDefault();
                 socket.emit("attack", {ident:player_id})
                 break;
         }
