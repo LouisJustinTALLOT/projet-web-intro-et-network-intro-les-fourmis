@@ -143,6 +143,9 @@ class Foe(Entity):
                 else:
                     return [], False
 
+        if self.last_displacement is None:
+            return []
+
         to_replace = 'xx' if self.last_was_x else '..'
 
         map[self._y][self._x] = self._symbol

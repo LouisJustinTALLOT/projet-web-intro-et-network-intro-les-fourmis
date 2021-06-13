@@ -97,7 +97,7 @@ class Game:
         :param entity: l'entité (un joueur, un monstre, etc.). Doit hériter de Entity
         """
         n_row = len(self._map)
-        # n_col = len(self._map[0])
+        n_col = len(self._map[0])
 
         y_init = randrange(n_row)
         # y_init = n_row // 2
@@ -105,9 +105,15 @@ class Game:
         while found is False:
             y_init += 1
             y_init %= n_row
-            for i, c in enumerate(self._map[y_init]):
+
+            i = randrange(n_col)
+
+            for incr in range(n_col):
+                index_col = (i + incr) % n_col
+                c = self._map[y_init][index_col]
+
                 if c == "..":
-                    x_init = i
+                    x_init = index_col
                     found = True
                     break
 
