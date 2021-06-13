@@ -165,3 +165,16 @@ class Game:
                  "life": f"{life}",
                  "ident": f"{player_id}"},
                 {"foo": "bar"}]
+
+    def build_data_respawn(self, new_x, new_y, player_id, content):
+        return [
+            {
+                "descr": "respawn",
+                "i": f"{new_y}",
+                "j": f"{new_x}",
+                "life": "100",
+                "ident": f"{player_id}",
+                "content": f"{content}"
+            }, 
+            {"foo": "bar"}
+        ]
