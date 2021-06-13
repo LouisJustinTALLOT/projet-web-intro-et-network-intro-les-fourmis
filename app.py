@@ -61,6 +61,6 @@ def on_respan(json, methods=["GET", "POST"]):
 
 if __name__=="__main__":
     print("Starting app...")
-    socketio.run(app, port=5001)
+    socketio.run(app, host="0.0.0.0", port=5001)
 
 
