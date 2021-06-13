@@ -43,10 +43,10 @@ class Game:
         :return: les requêtes à envoyer au joueur
         """
 
-        if player_id != None:
+        if player_id is not None:
             if self._all_players[player_id]._alive == False:
                 # il est mort, il ne peut rien faire
-                return
+                return []
 
         packets = []
 

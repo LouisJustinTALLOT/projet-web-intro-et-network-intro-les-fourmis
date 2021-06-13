@@ -130,7 +130,7 @@ class Foe(Entity):
                     this_was_x = (map[j][i] == 'xx')
                     break
 
-            if not moved:
+            if not moved and self.last_displacement is not None:
                 # on essaie quand même le dernier déplacement au cas-où (sauf si c'est un cul de sac...)
                 last_try = (-self.last_displacement[0], -self.last_displacement[1])
                 i, j = self._x + last_try[0], self._y + last_try[1]
