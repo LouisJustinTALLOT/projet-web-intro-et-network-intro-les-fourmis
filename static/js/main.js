@@ -116,6 +116,9 @@ window.addEventListener("load", (event) => {
                 if (player_id === -1) {
                     console.log(data[i].id)
                     player_id = parseInt(data[i].id);
+                    // on ajoute une flèche pour savoir qui on est
+                    var aChanger = document.getElementById("gold" + data[i].id).parentNode.querySelector("#ident");
+                    aChanger.innerText = "=>" + aChanger.innerText + "<="
                 }
                 break;
             }
