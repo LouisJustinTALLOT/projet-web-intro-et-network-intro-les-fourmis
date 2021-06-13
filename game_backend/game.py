@@ -1,4 +1,5 @@
 from random import random, randrange
+from typing import Dict
 
 from .map_generator import Generator
 from .entity import Player, Foe, Coin
@@ -11,7 +12,7 @@ class Game:
         self._generator.gen_tiles_level()
         self._map = self._generator.tiles_level
 
-        self._all_players = {}
+        self._all_players: Dict[int, Player] = {} 
         symbol = "@0"
         self._all_players[0] = Player(0, symbol)
 
