@@ -1,11 +1,13 @@
 body{
     background-color:blanchedalmond;
+    font-family: Consolas;
 }
 
 #titre{
     text-align: center;
     color:rgb(2, 167, 170);
     margin-bottom: 20px;
+    font-size: 25px;
 }
 
 #evenements{
@@ -105,4 +107,10 @@ div#joueur{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+}
+
+.lignes_joueurs  {
+    display: inline-block;
+    width: 30%;
+    text-align: center;
 }

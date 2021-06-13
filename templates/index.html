@@ -40,16 +40,16 @@
         <div id="infos">
             {% for i, player in players.items() %}
             <div id="joueur">
-                <span id="ident">
+                <span id="ident" class="lignes_joueurs">
                     Player {{i+1}}
                 </span>
-                <span id="vie">
+                <span id="vie" class="lignes_joueurs">
                     <span id="{{'vie{}'.format(i)}}">
                     Life : {{'{}'.format(players[i]._life_pt) }}
                     </span> 
                     <button id="{{'respawn{}'.format(i)}}" class="bouton" style="display:none">Revivre</button>
                 </span>
-                <span id="{{'gold{}'.format(i)}}">
+                <span id="{{'gold{}'.format(i)}}" class="lignes_joueurs">
                     Gold : {{'{}'.format(players[i]._money) }}
                 </span>
             </div>
