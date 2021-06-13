@@ -1,3 +1,6 @@
+from random import random, randrange
+from typing import Dict
+
 from .map_generator import Generator
 from .entity import Player, Foe, Coin
 
@@ -9,16 +12,23 @@ class Game:
         self._generator.gen_tiles_level()
         self._map = self._generator.tiles_level
 
-        self._all_players = {}
+        self._all_players: Dict[int, Player] = {} 
         symbol = "@0"
         self._all_players[0] = Player(0, symbol)
 
         self._all_coins = []
-        self._all_coins.append(Coin())
-
         self._all_foes = []
-        self._all_foes.append(Foe('Dark Vador', 5, 25, 'DV'))
-        self._all_foes.append(Foe('Joker', 2, 25, "Jo"))
+
+        self._all_coins.append(Coin())
+        self._all_coins.append(Coin())
+        self._all_foes.append(Foe('Dark Vador', 4, 10, 'DV'))
+        self._all_foes.append(Foe('Joker', 2, 7, "Jo"))
+        self._all_coins.append(Coin())
+        self._all_coins.append(Coin())
+        self._all_foes.append(Foe('Voldemord', 5, 12, 'Vd'))
+        self._all_foes.append(Foe('Gollum', 1, 4, "Go"))
+        self._all_coins.append(Coin())
+        self._all_coins.append(Coin())
 
         for player in self._all_players.values():
             self.find_empty_pos(entity=player)
@@ -43,10 +53,10 @@ class Game:
         :return: les requêtes à envoyer au joueur
         """
 
-        if player_id != None:
+        if player_id is not None:
             if self._all_players[player_id]._alive == False:
                 # il est mort, il ne peut rien faire
-                return
+                return []
 
         packets = []
 
@@ -75,6 +85,9 @@ class Game:
     def attack(self, player_id):
         player = self._all_players[player_id]
 
+        if player._alive == False:
+            return []
+
         for foe in self._all_foes:
             if foe._alive and foe.is_nearby(player):
                 # on attaque ce monstre !
@@ -92,15 +105,23 @@ class Game:
         :param entity: l'entité (un joueur, un monstre, etc.). Doit hériter de Entity
         """
         n_row = len(self._map)
-        # n_col = len(self._map[0])
+        n_col = len(self._map[0])
 
-        y_init = n_row // 2
+        y_init = randrange(n_row)
+        # y_init = n_row // 2
         found = False
         while found is False:
             y_init += 1
-            for i, c in enumerate(self._map[y_init]):
+            y_init %= n_row
+
+            i = randrange(n_col)
+
+            for incr in range(n_col):
+                index_col = (i + incr) % n_col
+                c = self._map[y_init][index_col]
+
                 if c == "..":
-                    x_init = i
+                    x_init = index_col
                     found = True
                     break
 
@@ -145,3 +166,16 @@ class Game:
                  "life": f"{life}",
                  "ident": f"{player_id}"},
                 {"foo": "bar"}]
+
+    def build_data_respawn(self, new_x, new_y, player_id, content):
+        return [
+            {
+                "descr": "respawn",
+                "i": f"{new_y}",
+                "j": f"{new_x}",
+                "life": "100",
+                "ident": f"{player_id}",
+                "content": f"{content}"
+            }, 
+            {"foo": "bar"}
+        ]

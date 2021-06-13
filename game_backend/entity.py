@@ -109,6 +109,9 @@ class Foe(Entity):
         if not self._alive:
             return [], False
 
+        # On commence par le faire attaquer
+        packets = self.attack(game)
+
         this_was_x = False
         map = game.getMap()
 
@@ -130,7 +133,7 @@ class Foe(Entity):
                     this_was_x = (map[j][i] == 'xx')
                     break
 
-            if not moved:
+            if not moved and self.last_displacement is not None:
                 # on essaie quand même le dernier déplacement au cas-où (sauf si c'est un cul de sac...)
                 last_try = (-self.last_displacement[0], -self.last_displacement[1])
                 i, j = self._x + last_try[0], self._y + last_try[1]
@@ -143,6 +146,9 @@ class Foe(Entity):
                 else:
                     return [], False
 
+        if self.last_displacement is None:
+            return []
+
         to_replace = 'xx' if self.last_was_x else '..'
 
         map[self._y][self._x] = self._symbol
@@ -152,7 +158,8 @@ class Foe(Entity):
 
         self.last_was_x = this_was_x
 
-        packets = self.attack(game)
+        packets.extend(self.attack(game))
+
         packets.insert(0, (data_foe, True))
 
         # on retourne une liste

@@ -30,27 +30,33 @@ window.addEventListener("DOMContentLoaded", (event) => {
     var btn_n = document.getElementById("go_n");
     btn_n.onclick = function(e) {
         // console.log("Clicked on button north");
-        socket.emit("move", {dx:0, dy:-1});
+        socket.emit("move", {ident: player_id, dx:0, dy:-1});
     };
 
     var btn_s = document.getElementById("go_s");
     btn_s.onclick = function(e) {
         // console.log("Clicked on button south");
-        socket.emit("move", {dx:0, dy:1});
+        socket.emit("move", {ident: player_id, dx:0, dy:1});
     };
 
     var btn_w = document.getElementById("go_w");
     btn_w.onclick = function(e) {
         // console.log("Clicked on button w");
-        socket.emit("move", {dx:-1, dy:0});
+        socket.emit("move", {ident: player_id, dx:-1, dy:0});
     };
 
     var btn_e = document.getElementById("go_e");
     btn_e.onclick = function(e) {
         // console.log("Clicked on button e");
-        socket.emit("move", {dx:1, dy:0});
+        socket.emit("move", {ident: player_id, dx:1, dy:0});
     };
 
+
+    var btn_respawn = document.getElementById("respawn");
+    btn_respawn.onclick = function(e) {
+        console.log("respawning ... ");
+        socket.emit("respawn", {ident: player_id});
+    }; 
 
     socket.on("response", function(data){
         // console.log(data);
@@ -85,7 +91,24 @@ window.addEventListener("DOMContentLoaded", (event) => {
                 console.log("Le monstre " + data[i].attacker + " a fait des dommages au joueur " + data[i].ident + " (" + data[i].amount + " pts de vie)");
                 var cell_id = "vie" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
-                span_to_modif.textContent = "life : " + data[i].life;
+                span_to_modif.textContent = "Life : " + data[i].life;
+                break;
+            }
+            else if (data[i].descr === "respawn") {
+                console.log("Le joueur "+ data[i].ident + " respawn");
+
+                // on refait apparaître le joueur
+                var cell_id = "cell " + data[i].i + "-" + data[i].j;
+                var span_to_modif = document.getElementById(cell_id);
+                symbole = data[i].content;
+                span_to_modif.className = data[i].content;
+                span_to_modif.textContent = data[i].content;
+
+                // on affiche ses nouveaux PV
+                var cell_id = "vie"+ data[i].ident;
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = "Life : " + data[i].life ;
+
                 break;
             }
         }

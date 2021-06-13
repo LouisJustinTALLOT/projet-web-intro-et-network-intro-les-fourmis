@@ -29,6 +29,10 @@ def on_move_msg(json, methods=["GET", "POST"]):
 @socketio.on("attack")
 def on_attack(json, methods=["GET", "POST"]):
     player_id = json["ident"]
+
+    if game._all_players[player_id]._alive == False:
+        return
+
     packets0 = game.attack(player_id)
     packets1 = game.update_all(None)
 
@@ -40,8 +44,23 @@ def on_attack(json, methods=["GET", "POST"]):
         if ret:
             socketio.emit("response", data)
 
+@socketio.on("respawn")
+def on_respan(json, methods=["GET", "POST"]):
+    player_id = json["ident"]
+    player = game._all_players[player_id]
+
+    if player._alive == False:
+        # on ranime le joueur 
+        player._alive = True
+        player._life_pt = 100
+        game.find_empty_pos(entity=player)
+        
+        data = game.build_data_respawn(player._x, player._y, player_id, player._symbol)
+        socketio.emit("response", data)
+
 
 if __name__=="__main__":
-    socketio.run(app, port=5001)
+    print("Starting app...")
+    socketio.run(app, host="0.0.0.0", port=5001)
 
 

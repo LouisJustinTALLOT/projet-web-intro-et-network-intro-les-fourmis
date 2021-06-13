@@ -1,8 +1,9 @@
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href={{ url_for("static", filename="css/main.css") }}>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script> -->
         <script type="text/javascript" src={{ url_for("static", filename="js/main.js") }}></script>
+        <script type="text/javascript" src={{ url_for("static", filename="js/socketio1.7.3.min.js") }}></script>
+        <link rel="stylesheet" type="text/css" href={{ url_for("static", filename="css/main.css") }}>
     </head>
     <body>
         <div id="boite">
@@ -39,12 +40,16 @@
                     Player {{i+1}}
                 </span>
                 <span id="{{'vie{}'.format(i)}}">
-                    <span> life : {{'{}'.format(players[i]._life_pt) }} </span>
+                    Life : {{'{}'.format(players[i]._life_pt) }}
                 </span>
             </div>
             {% endfor %}
         </div>
-        </div>
+        <br />
+
+        <button id="respawn" class="bouton">Revivre</button>
+
+    </div>
 
     </body>
 </html>
