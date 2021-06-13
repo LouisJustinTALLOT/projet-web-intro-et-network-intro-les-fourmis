@@ -13,8 +13,7 @@ class Game:
         self._map = self._generator.tiles_level
 
         self._all_players: Dict[int, Player] = {} 
-        symbol = "@0"
-        self._all_players[0] = Player(0, symbol)
+        self._nb_players = -1
 
         self._all_coins = []
         self._all_foes = []
@@ -38,6 +37,14 @@ class Game:
 
         for foe in self._all_foes:
             self.find_empty_pos(entity=foe)
+
+    def add_new_player(self):
+        symbol = "@0"
+        new_player = Player(self._nb_players + 1, symbol)
+        self._all_players[self._nb_players + 1] = new_player
+        self.find_empty_pos(entity = new_player)
+        self._nb_players += 1
+        return self._nb_players
 
     def getMap(self):
         return self._map

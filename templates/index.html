@@ -34,7 +34,7 @@
 
         </div>
         <div id="infos">
-            {% for i in range(n_players) %}
+            {% for i, player in players.items() %}
             <div id="joueur">
                 <span id="ident">
                     Player {{i+1}}
