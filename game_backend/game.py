@@ -196,3 +196,15 @@ class Game:
             }, 
             {"foo": "bar"}
         ]
+
+    def build_data_new_challenger(self, x, y, player_id, content):
+        return [
+            {
+                "descr": "new_challenger",
+                "i": f"{y}",
+                "j": f"{x}",
+                "ident": f"{player_id}",
+                "content": f"{content}"
+            },
+            {"foo": "bar"}
+        ]

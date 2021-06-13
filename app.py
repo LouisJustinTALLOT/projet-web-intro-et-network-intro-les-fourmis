@@ -20,6 +20,10 @@ def send_player_id(json, methods=["GET", "POST"]):
     print("sending id to new player... ", player_id)
     socketio.emit("response", data)
 
+    player = game._all_players[player_id]
+    # à tous les autres joueurs, on doit envoyer le nouveau joueur
+    socketio.emit("response", game.build_data_new_challenger(player._x, player._y, player_id, player._symbol))
+
 @app.route("/")
 def index():
     global player_id

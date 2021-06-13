@@ -12,6 +12,25 @@ window.addEventListener("DOMContentLoaded", (event) => {
 })
 
 
+function addInfoLine(newPlayerId) {
+    var divInfos = document.getElementById("infos");
+
+    var childInfosJoueur = divInfos.querySelector("#joueur").cloneNode(true)
+    console.log(childInfosJoueur)
+    var actualNumber = parseInt(newPlayerId) + 1;
+    childInfosJoueur.querySelector("#ident").innerText = "Player " + actualNumber;
+    console.log(childInfosJoueur)
+    childInfosJoueur.querySelector("#gold0").content = "Gold : 0";
+    childInfosJoueur.querySelector("#gold0").id = "gold" + newPlayerId;
+
+    var vieJoueur = childInfosJoueur.querySelector("#vie")
+    vieJoueur.querySelector("#vie0").content = "Life : 100"
+    vieJoueur.querySelector("#vie0").id = "vie" + newPlayerId
+    vieJoueur.querySelector("#respawn0").id = "respawn" + newPlayerId
+
+    divInfos.appendChild(childInfosJoueur)
+}
+
 window.addEventListener("load", (event) => {
 
     // socket.emit("login");
@@ -79,10 +98,22 @@ window.addEventListener("load", (event) => {
                     span_to_modif.className = data[i].content;
                     span_to_modif.textContent = data[i].content;
                 }
+            }else if (data[i].descr === "new_challenger") {
+                if(data[i].ident == player_id || player_id == -1) {
+                    // do nothing
+                }else {
+                    // on ajoute les lignes d'informations d'un nouveau joueur
+                    addInfoLine(data[i].ident)
+                    // et on le place sur le terrain
+                    var cell_id = "cell " + data[i].i + "-" + data[i].j;
+                    var span_to_modif = document.getElementById(cell_id);
+                    symbole = data[i].content;
+                    span_to_modif.className = data[i].content;
+                    span_to_modif.textContent = data[i].content;
+                }
+
             } else if (data[i].descr === "send_player_id") {
-                console.log("ici, ", player_id)
                 if (player_id === -1) {
-                    console.log("here ", player_id)
                     console.log(data[i].id)
                     player_id = parseInt(data[i].id);
                 }
