@@ -99,6 +99,12 @@ window.addEventListener("load", (event) => {
                     span_to_modif.textContent = data[i].content;
                 }
             }else if (data[i].descr === "new_challenger") {
+                //On lui souhaite la bienvenue
+                var cell_id = "evenements";
+                var span_to_modif = document.getElementById(cell_id);
+                var numéro = parseInt(data[i].ident)+1;
+                span_to_modif.textContent = "Bienvenue Joueur n°"+ numéro;
+
                 if(data[i].ident == player_id || player_id == -1) {
                     // do nothing
                 }else {
@@ -127,17 +133,35 @@ window.addEventListener("load", (event) => {
                 var cell_id = "gold" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
                 span_to_modif.textContent = "Gold : " + data[i].money;
+                var cell_id = "evenements";
+                var span_to_modif = document.getElementById(cell_id);
+                var numéro = parseInt(data[i].ident)+1;
+                span_to_modif.textContent = "Joueur "+ numéro + " devient riche !";
                 break;
             }
             else if(data[i].descr === "fight") {
                 console.log("Le joueur" + data[i].ident + " a attaqué le monstre " + data[i].target + " et il est mort ?" + data[i].isdead)
+                var cell_id = "evenements";
+                var span_to_modif = document.getElementById(cell_id);
+                var numéro = parseInt(data[i].ident)+1;
+                if (data[i].isdead === "True"){
+                    span_to_modif.textContent = "Joueur "+ numéro + " a tué le monstre " + data[i].target;
+                }
+                else {
+                    span_to_modif.textContent = "Joueur "+ numéro + " a attaqué le monstre " + data[i].target;
+                }
                 break;
             }
             else if (data[i].descr === "dead") {
-                console.log(data[i].attacker + " a tué le joueur " + data[i].ident);
+                console.log(data[i].attacker + " a tué Joueur " + data[i].ident);
                 var cell_id = "vie" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
                 span_to_modif.textContent = "Dead";
+
+                var cell_id = "evenements";
+                var span_to_modif = document.getElementById(cell_id);
+                var numéro = parseInt(data[i].ident)+1;
+                span_to_modif.textContent = "Le monstre " + data[i].attacker + " a tué Joueur " + numéro;
 
 
                 if (data[i].ident == player_id) {
@@ -146,6 +170,10 @@ window.addEventListener("load", (event) => {
                     btn_respawn.onclick = function() {
                     console.log("respawning ... ");
                     socket.emit("respawn", {ident: player_id});
+                    var cell_id = "evenements";
+                    var span_to_modif = document.getElementById(cell_id);
+                    var numéro = parseInt(data[i].ident)+1;
+                    span_to_modif.textContent = "Bon retour parmi nous joueur " + numéro;
                     };
                     btn_respawn.style= "display:inline";
                 }

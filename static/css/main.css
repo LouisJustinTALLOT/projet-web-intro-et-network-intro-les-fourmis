@@ -8,6 +8,13 @@ body{
     margin-bottom: 20px;
 }
 
+#evenements{
+    text-align: center;
+    background-color:lightyellow;
+    border: 3px solid lightsalmon;
+    margin: 10px 10%;
+}
+
 .flexbox{
     display: flex;
     flex-direction: row;
