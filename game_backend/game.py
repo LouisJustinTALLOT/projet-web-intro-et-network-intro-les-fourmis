@@ -16,11 +16,18 @@ class Game:
         self._all_players[0] = Player(0, symbol)
 
         self._all_coins = []
-        self._all_coins.append(Coin())
-
         self._all_foes = []
-        self._all_foes.append(Foe('Dark Vador', 5, 25, 'DV'))
-        self._all_foes.append(Foe('Joker', 2, 25, "Jo"))
+
+        self._all_coins.append(Coin())
+        self._all_coins.append(Coin())
+        self._all_foes.append(Foe('Dark Vador', 4, 10, 'DV'))
+        self._all_foes.append(Foe('Joker', 2, 7, "Jo"))
+        self._all_coins.append(Coin())
+        self._all_coins.append(Coin())
+        self._all_foes.append(Foe('Voldemord', 5, 12, 'Vd'))
+        self._all_foes.append(Foe('Gollum', 1, 4, "Go"))
+        self._all_coins.append(Coin())
+        self._all_coins.append(Coin())
 
         for player in self._all_players.values():
             self.find_empty_pos(entity=player)
