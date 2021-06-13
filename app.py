@@ -29,6 +29,10 @@ def on_move_msg(json, methods=["GET", "POST"]):
 @socketio.on("attack")
 def on_attack(json, methods=["GET", "POST"]):
     player_id = json["ident"]
+
+    if game._all_players[player_id]._alive == False:
+        return
+
     packets0 = game.attack(player_id)
     packets1 = game.update_all(None)
 

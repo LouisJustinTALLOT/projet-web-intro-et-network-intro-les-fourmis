@@ -1,3 +1,5 @@
+from random import random, randrange
+
 from .map_generator import Generator
 from .entity import Player, Foe, Coin
 
@@ -75,6 +77,9 @@ class Game:
     def attack(self, player_id):
         player = self._all_players[player_id]
 
+        if player._alive == False:
+            return []
+
         for foe in self._all_foes:
             if foe._alive and foe.is_nearby(player):
                 # on attaque ce monstre !
@@ -94,10 +99,12 @@ class Game:
         n_row = len(self._map)
         # n_col = len(self._map[0])
 
-        y_init = n_row // 2
+        y_init = randrange(n_row)
+        # y_init = n_row // 2
         found = False
         while found is False:
             y_init += 1
+            y_init %= n_row
             for i, c in enumerate(self._map[y_init]):
                 if c == "..":
                     x_init = i
