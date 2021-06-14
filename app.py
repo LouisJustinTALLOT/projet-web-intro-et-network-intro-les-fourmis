@@ -82,10 +82,10 @@ def on_respan(json, methods=["GET", "POST"]):
 
 @socketio.on("next_level_data_please")
 def load_next_level_data(json, methods=["GET", "POST"]):
-    print("ici")
+
     game.new_map()
     data = game.build_data_next_level_terrain()
-    print(data)
+
     socketio.emit("response", data)
 
 

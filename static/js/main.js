@@ -227,7 +227,7 @@ window.addEventListener("load", (event) => {
                         var cell_id = "cell " + String(y) + "-" + String(x);
 
                         var span_to_modif = document.getElementById(cell_id);
-                        symbole = data[i][String(y) + "-" + String(x)];
+                        symbole = data[i][String(y)][x];
                         span_to_modif.className = symbole;
                         span_to_modif.textContent = symbole;
                     }

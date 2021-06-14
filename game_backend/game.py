@@ -271,9 +271,10 @@ class Game:
         data_dict["descr"] = "next_level_data"
         data_dict["max_y"] = self._h
         data_dict["max_x"] = self._w
-        for x in range(self._w):
-            for y in range(self._h):
-                data_dict[str(y) + "-" + str(x)] = self._map[y][x]
+        for y in range(self._h):
+            data_dict[str(y)] = [""]*self._w
+            for x in range(self._w):
+                data_dict[str(y)][x] = self._map[y][x]
 
         return [
             data_dict, 
