@@ -36,6 +36,11 @@ Le niveau actuel est marché en haut à gauche.
 
 Le système de niveau marche en mode joueur unique. En mode multijoueur, le système est pratiquement fonctionnel.
 
+### Système de sauvegarde
+
+En mode joueur seul, le joueur peut sauvegarder une seule partie 
+en appuyant sur le bouton `sauvegarder`. La sauvegarde est écrasée quand une nouvelle est effectuée.
+
 # Rogue nethack with Flask
 
 Programme Python servant de base à l'évaluation par projet du cours Programme coopérants et Web Intro.
