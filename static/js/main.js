@@ -138,6 +138,11 @@ window.addEventListener("load", (event) => {
                 var cell_id = "gold" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
                 span_to_modif.textContent = "Gold : " + data[i].money;
+
+                var cell_id = "score" + data[i].ident;
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = "Score : " + data[i].score;
+
                 var cell_id = "evenements";
                 var span_to_modif = document.getElementById(cell_id);
                 var numéro = parseInt(data[i].ident)+1;
@@ -155,6 +160,9 @@ window.addEventListener("load", (event) => {
                 else {
                     span_to_modif.textContent = "Joueur "+ numéro + " a attaqué le monstre " + data[i].target;
                 }
+                var cell_id = "score" + data[i].ident;
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = "Score : " + data[i].score;
                 break;
             }
             else if (data[i].descr === "dead") {
@@ -162,6 +170,10 @@ window.addEventListener("load", (event) => {
                 var cell_id = "vie" + data[i].ident;
                 var span_to_modif = document.getElementById(cell_id);
                 span_to_modif.textContent = "Dead";
+
+                var cell_id = "score" + data[i].ident;
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = "Score : " + data[i].score;
 
                 var cell_id = "evenements";
                 var span_to_modif = document.getElementById(cell_id);
@@ -178,7 +190,7 @@ window.addEventListener("load", (event) => {
                     var cell_id = "evenements";
                     var span_to_modif = document.getElementById(cell_id);
                     var numéro = parseInt(data[i].ident)+1;
-                    span_to_modif.textContent = "Bon retour parmi nous joueur " + numéro;
+                    span_to_modif.textContent = "Bon retour parmi nous Joueur " + numéro;
                     };
                     btn_respawn.style= "display:inline";
                 }
@@ -216,6 +228,15 @@ window.addEventListener("load", (event) => {
                 var cell_id = "currrent_level";
                 var span_to_modif = document.getElementById(cell_id);
                 span_to_modif.textContent = "Niveau " + data[i].no_new_level ;
+
+                var cell_id = "score" + data[i].ident;
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = "Score : " + data[i].score;
+
+                var cell_id = "evenements";
+                var span_to_modif = document.getElementById(cell_id);
+                var numéro = parseInt(data[i].ident)+1;
+                span_to_modif.textContent = "Bienvenue au niveau " + data[i].no_new_level;
 
             }
         }

@@ -53,6 +53,9 @@
                 <span id="{{'gold{}'.format(i)}}" class="lignes_joueurs">
                     Gold : {{'{}'.format(players[i]._money) }}
                 </span>
+                <span id="{{'score{}'.format(i)}}" class="lignes_joueurs">
+                    Score : {{'{}'.format(players[i]._score) }}
+                </span>
             </div>
             {% endfor %}
         </div>
