@@ -202,8 +202,8 @@ class Foe(Entity):
 
 
 class Coin(Entity):
-    def __init__(self):
-        super(Coin, self).__init__(symbol=symbol_coin)
+    def __init__(self, symbol=symbol_coin):
+        super(Coin, self).__init__(symbol=symbol)
         self._value = 50
 
     def check_collected(self, game):
@@ -223,4 +223,4 @@ class Coin(Entity):
 
 class NextLevel(Coin):
     def __init__(self, symbol=symbol_next_level):
-        super(Coin, self).__init__(symbol)
+        super().__init__(symbol=symbol)
