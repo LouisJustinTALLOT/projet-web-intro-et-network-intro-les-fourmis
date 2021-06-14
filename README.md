@@ -1,7 +1,44 @@
+# Ce que nous avons fait
+
+### Monstres et trésors
+
+Nous avons ajouté un certain nombre de monstres (Dark Vador, Gollum, le Joker et Voldemord, en rouge) et de trésors
+apparents sur la carte (en jaune). Les joueurs sont tous en vert.
+
+Les joueurs peuvent attaquer ces monstres en appuyant sur la barre espace s'ils sont proches d'eux. Mais attention,
+les monstres peuvent également attaquer les joueurs ! Les points de vie des monstres sont variables, ils ne sont pas
+tous faciles à battre !
+
+Un compteur sous la carte indique les points de vie restants de chaque joueur. Il y a aussi une ligne avec la quantité
+d'argent gagnée, et un score (calculé avec les gains d'argent, les intéractions avec les monstres et les morts).
+
+### Multi-joueur
+
+Nous avons ajouté un mode multijoueur. Pour y accéder, on peut ouvrir plusieurs onglets sur le même navigateur, ou
+jouer sur le même réseau local (host=0.0.0.0).
+
+Les joueurs peuvent s'attaquer entre eux, et voir les autres informations de chaque joueur. Des flèches permettent de
+savoir quel joueur nous sommes actuellement en train de jouer.
+
+Nous avons ajouté un petit bandeau avec la dernière action pour pouvoir suivre les aventures des autres joueurs
+(par exemple : "le joueur 2 a attaqué Voldemord").
+
+Attention, il ne faut pas actualiser la page pendant la partie !
+
+### Interface
+
+Nous avons amélioré l'interface. Le code couleur se rapproche d'un Rogue-Pacman !
+
+### Système de niveaux
+
+Nous avons ajouté un système de niveaux. Pour accéder au niveau supérieur, il faut se placer sur la case grisée.
+Le niveau actuel est marché en haut à gauche.
+
+Le système de niveau marche en mode joueur unique. En mode multijoueur, le système est pratiquement fonctionnel.
+
 # Rogue nethack with Flask
 
-Programme Python servant de base à l'évaluation par projet du cours Programme coopérants et Web Intro. 
-
+Programme Python servant de base à l'évaluation par projet du cours Programme coopérants et Web Intro.
 
 ## Execution du programme 
 
