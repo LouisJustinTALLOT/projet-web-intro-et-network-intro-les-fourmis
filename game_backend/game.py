@@ -80,7 +80,8 @@ class Game:
         self._all_coins.append(Coin())
 
         for player in self._all_players.values():
-            self.find_empty_pos(entity=player)
+            if player._alive:
+                self.find_empty_pos(entity=player)
 
         for coin in self._all_coins:
             self.find_empty_pos(entity=coin)
