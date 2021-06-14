@@ -211,6 +211,13 @@ window.addEventListener("load", (event) => {
 
                 break;
             }
+            else if (data[i].descr === "next_level") {
+                console.log("Going to the next level...")
+                var cell_id = "currrent_level";
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = "Niveau " + data[i].no_new_level ;
+
+            }
         }
     });
 
