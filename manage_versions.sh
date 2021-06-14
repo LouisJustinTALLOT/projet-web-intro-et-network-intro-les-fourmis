@@ -1,0 +1,6 @@
+pip install 'Flask-SocketIO==4.3.1'
+pip install 'python-engineio==3.13.2'
+pip install 'python-socketio==4.6.0'
+pip install 'gevent==21.1.2'
+pip install 'gevent-websocket==0.10.1'
+pip install 'Flask==1.1.2'

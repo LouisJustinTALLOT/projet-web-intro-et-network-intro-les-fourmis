@@ -1,11 +1,20 @@
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href={{ url_for("static", filename="css/main.css") }}>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script> -->
         <script type="text/javascript" src={{ url_for("static", filename="js/main.js") }}></script>
+        <script type="text/javascript" src={{ url_for("static", filename="js/socketio1.7.3.min.js") }}></script>
+        <link rel="stylesheet" type="text/css" href={{ url_for("static", filename="css/main.css") }}>
     </head>
     <body>
-        <div> <b> Rogue Flask </b></div>
+        <div id="boite">
+        <div id="titre"> <b> Rogue Flask </b></div>
+        
+        <button id="btn_sauvegarde">Sauvegarder</button>
+        <button id="btn_charger">Charger</button>
+        <div id="currrent_level">Niveau 1</div>
+        <div id="evenements">
+            Bienvenue !
+        </div>
 
         <div class="flexbox">
             <div class="thekeypad">
@@ -22,14 +31,39 @@
 
             <div id="console" style="font-family: monospace;">
                 {% for i in range(n_row) %}
-                <div style="height:18px">
+                <div class="ligne">
                     {% for j in range(n_col) %}
-                    <span id="{{ 'cell {}-{}'.format(i,j) }}"> {{ mapdata[i][j] }} </span>
+                    <span id="{{ 'cell {}-{}'.format(i,j) }}" class="{{ '{}'.format(mapdata[i][j]) }}"> {{ '{}'.format(mapdata[i][j]) }} </span>
                     {% endfor %}
                 </div>
                 {% endfor %}
             </div>
+
         </div>
+        <div id="infos">
+            {% for i, player in players.items() %}
+            <div id="joueur">
+                <span id="ident" class="lignes_joueurs">
+                    Player {{i+1}}
+                </span>
+                <span id="vie" class="lignes_joueurs">
+                    <span id="{{'vie{}'.format(i)}}">
+                    Life : {{'{}'.format(players[i]._life_pt) }}
+                    </span> 
+                    <button id="{{'respawn{}'.format(i)}}" class="bouton" style="display:none">Revivre</button>
+                </span>
+                <span id="{{'gold{}'.format(i)}}" class="lignes_joueurs">
+                    Gold : {{'{}'.format(players[i]._money) }}
+                </span>
+                <span id="{{'score{}'.format(i)}}" class="lignes_joueurs">
+                    Score : {{'{}'.format(players[i]._score) }}
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+        <br />
+
+    </div>
 
     </body>
 </html>
