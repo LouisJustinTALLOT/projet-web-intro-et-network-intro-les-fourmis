@@ -7,6 +7,8 @@ from .entity import NextLevel, Player, Foe, Coin
 
 class Game:
     def __init__(self, width=76, height=32):
+        self._w = width
+        self._h = height
         self._generator = Generator(width=width, height=height)
         self._generator.gen_level()
         self._generator.gen_tiles_level()
@@ -54,6 +56,39 @@ class Game:
     def getMap(self):
         return self._map
 
+    def new_map(self):
+        self._generator = Generator(width=self._w, height=self._h)
+        self._generator.gen_level()
+        self._generator.gen_tiles_level()
+        self._map = self._generator.tiles_level
+        
+        self._all_coins = []
+        self._all_foes = []
+        self._next_level = NextLevel()
+
+        self._all_coins.append(Coin())
+        self._all_coins.append(Coin())
+        self._all_foes.append(Foe('Dark Vador', 4, 10, 'DV'))
+        self._all_foes.append(Foe('Joker', 2, 7, "Jo"))
+        self._all_coins.append(Coin())
+        self._all_coins.append(Coin())
+        self._all_foes.append(Foe('Voldemord', 5, 12, 'Vd'))
+        self._all_foes.append(Foe('Gollum', 1, 4, "Go"))
+        self._all_coins.append(Coin())
+        self._all_coins.append(Coin())
+
+        for player in self._all_players.values():
+            self.find_empty_pos(entity=player)
+
+        for coin in self._all_coins:
+            self.find_empty_pos(entity=coin)
+
+        for foe in self._all_foes:
+            self.find_empty_pos(entity=foe)
+
+        self.find_empty_pos(entity=self._next_level) 
+
+
     def update_all(self, player_id=None, dx=0, dy=0):
         """
         Met à jour tous les monstres, les joueurs et les coins.
@@ -85,6 +120,11 @@ class Game:
                 self._all_players[id_collected].earn_money(coin._value)
                 packets.append( ((self.build_data_earn(id_collected, coin._value, self._all_players[id_collected]._money)), True) )
 
+        for foe in self._all_foes:
+            if foe._alive:
+                packets_foe = foe.move_foe(self)
+                packets.extend( packets_foe )
+
         id_next_level = self._next_level.check_collected(self)
         if id_next_level is not None:
             print("here")
@@ -93,12 +133,6 @@ class Game:
             packets.append(
                 ((self.build_data_next_level(id_next_level)), True)
             )
-
-
-        for foe in self._all_foes:
-            if foe._alive:
-                packets_foe = foe.move_foe(self)
-                packets.extend( packets_foe )
 
         return packets
 
@@ -229,5 +263,19 @@ class Game:
                 "ident": f"{player_id}",
                 "no_new_level": f"{self._current_level}"
             },
+            {"foo": "bar"}
+        ]
+
+    def build_data_next_level_terrain(self):
+        data_dict = {}
+        data_dict["descr"] = "next_level_data"
+        data_dict["max_y"] = self._h
+        data_dict["max_x"] = self._w
+        for x in range(self._w):
+            for y in range(self._h):
+                data_dict[str(y) + "-" + str(x)] = self._map[y][x]
+
+        return [
+            data_dict, 
             {"foo": "bar"}
         ]
