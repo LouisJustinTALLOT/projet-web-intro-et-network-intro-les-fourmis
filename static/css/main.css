@@ -10,12 +10,20 @@ body{
     font-size: 25px;
 }
 
+#currrent_level {
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 2%;
+}
+
+
 #evenements{
     display: inline-block;
     text-align: center;
     background-color:lightyellow;
     border: 3px solid lightsalmon;
-    margin: 10px 10%;
+    margin: 10px 35%;
+    padding: 5px 10px;
 }
 
 .flexbox{
@@ -30,7 +38,8 @@ body{
     grid-auto-rows: 35px;
     grid-gap: 5px;
     max-width:120px; 
-    margin-right: 10px;
+    margin-right: 30px;
+    margin-left: 20px;
 }
 
 .keypad_btn{
@@ -46,11 +55,6 @@ div.ligne{
 
 #console {
     user-select: none;
-}
-
-#currrent_level {
-    display: inline-block;
-    font-size: 16px;
 }
 
 span.\#\#{
