@@ -237,6 +237,21 @@ window.addEventListener("load", (event) => {
                 var span_to_modif = document.getElementById(cell_id);
                 var numéro = parseInt(data[i].ident)+1;
                 span_to_modif.textContent = "Bienvenue au niveau " + data[i].no_new_level;
+                socket.emit("next_level_data_please", {});
+                break;
+            }
+
+            else if (data[i].descr === "next_level_data") {
+                for (let y=0; y< data[i].max_y; y++) {
+                    for (let x=0; x < data[i].max_x; x++) {
+                        var cell_id = "cell " + String(y) + "-" + String(x);
+
+                        var span_to_modif = document.getElementById(cell_id);
+                        symbole = data[i][String(y) + "-" + String(x)];
+                        span_to_modif.className = symbole;
+                        span_to_modif.textContent = symbole;
+                    }
+                }
 
             }
         }
