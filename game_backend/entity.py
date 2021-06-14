@@ -223,4 +223,4 @@ class Coin(Entity):
 
 class NextLevel(Coin):
     def __init__(self, symbol=symbol_next_level):
-        super().__init__(symbol=symbol)
+        super(Coin, self).__init__(symbol)
