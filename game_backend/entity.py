@@ -41,6 +41,7 @@ class Player(Entity):
         self._id = id
         self._money = 0
         self._life_pt = 100
+        self._score = 0
 
     def move(self, dx, dy, game):
         """
@@ -72,11 +73,13 @@ class Player(Entity):
 
     def earn_money(self, _value):
         self._money += _value
+        self._score += _value//2
 
     def attacked(self, game, damage, attacker_name):
         self._life_pt -= damage
         if self._life_pt <= 0:
-            return [(game.build_data_dead(attacker_name, self._id), True), (self.kill_entity(game), True)]
+            self._score -= 100
+            return [(game.build_data_dead(attacker_name, self._id, self._score), True), (self.kill_entity(game), True)]
         else:
             return [(game.build_data_damaged(attacker_name, damage, self._life_pt, self._id), True)]
 

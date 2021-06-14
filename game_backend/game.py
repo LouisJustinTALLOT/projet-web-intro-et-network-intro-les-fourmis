@@ -118,7 +118,7 @@ class Game:
             if not id_collected == None:
                 coin.kill_entity(self)
                 self._all_players[id_collected].earn_money(coin._value)
-                packets.append( ((self.build_data_earn(id_collected, coin._value, self._all_players[id_collected]._money)), True) )
+                packets.append( ((self.build_data_earn(id_collected, coin._value, self._all_players[id_collected]._money, self._all_players[id_collected]._score)), True) )
 
         for foe in self._all_foes:
             if foe._alive:
@@ -129,9 +129,10 @@ class Game:
         if id_next_level is not None:
             print("here")
             self._current_level += 1
+            self._all_players[player_id]._score += 100
             self._next_level.kill_entity(self)
             packets.append(
-                ((self.build_data_next_level(id_next_level)), True)
+                ((self.build_data_next_level(id_next_level, self._all_players[player_id]._score)), True)
             )
 
         return packets
@@ -148,8 +149,9 @@ class Game:
             if foe._alive and foe.is_nearby(player):
                 # on attaque ce monstre !
                 data_fight = foe.attacked(self, 1)
+                self._all_players[player_id]._score += foe.strength
                 packets.append(data_fight)
-                packets.append( (self.build_data_attack(foe.name, player_id, not foe._alive), True) )
+                packets.append( (self.build_data_attack(foe.name, player_id, not foe._alive, self._all_players[player_id]._score), True) )
 
         for other_player in self._all_players.values():
             if other_player == player:
@@ -203,24 +205,27 @@ class Game:
                  "j": f"{new_x}",
                  "content": new_content}]
 
-    def build_data_earn(self, player_id, earned_amount, total):
+    def build_data_earn(self, player_id, earned_amount, total, score):
         return [{"descr": "earn",
                  "ident": f"{player_id}",
                  "val": f"{earned_amount}",
-                 "money": f"{total}"},
+                 "money": f"{total}",
+                 "score": f"{score}"},
                 {"foo": "bar"}]
 
-    def build_data_attack(self, foe_name, player_id, is_dead):
+    def build_data_attack(self, foe_name, player_id, is_dead, score):
         return [{"descr": "fight",
                  "ident": f"{player_id}",
                  "target": f"{foe_name}",
-                 "isdead": f"{is_dead}"},
+                 "isdead": f"{is_dead}",
+                 "score": f"{score}"},
                 {"foo": "bar"}]
 
-    def build_data_dead(self, attacker_name, player_id):
+    def build_data_dead(self, attacker_name, player_id, score):
         return [{"descr": "dead",
                  "attacker": f"{attacker_name}",
-                 "ident": f"{player_id}"},
+                 "ident": f"{player_id}",
+                 "score": f"{score}"},
                 {"foo": "bar"}]
 
     def build_data_damaged(self, attacker_name, amount, life, player_id):
@@ -256,12 +261,13 @@ class Game:
             {"foo": "bar"}
         ]
 
-    def build_data_next_level(self, player_id):
+    def build_data_next_level(self, player_id, score):
         return [
             {
                 "descr": "next_level",
                 "ident": f"{player_id}",
-                "no_new_level": f"{self._current_level}"
+                "no_new_level": f"{self._current_level}",
+                "score": f"{score}"
             },
             {"foo": "bar"}
         ]
