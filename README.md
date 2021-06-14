@@ -31,7 +31,7 @@ Nous avons amélioré l'interface. Le code couleur se rapproche d'un Rogue-Pacma
 
 ### Système de niveaux
 
-Nous avons ajouté un système de niveaux. Pour accéder au niveau supérieur, il faut se placer sur la case grisée.
+Nous avons ajouté un système de niveaux. Pour accéder au niveau supérieur, il faut se placer sur la case blanche.
 Le niveau actuel est marché en haut à gauche.
 
 Le système de niveau marche en mode joueur unique. En mode multijoueur, le système est pratiquement fonctionnel.
