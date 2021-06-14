@@ -73,6 +73,11 @@ span.co{
     color:gold;
 }
 
+span.nl{
+    background-color: white;
+    color: white;
+}
+
 span.DV{
     background-color:rgb(250, 45, 86);
     color: rgb(250, 45, 86);
