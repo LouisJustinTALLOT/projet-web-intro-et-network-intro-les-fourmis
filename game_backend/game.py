@@ -289,3 +289,20 @@ class Game:
             data_dict, 
             {"foo": "bar"}
         ]
+
+    def build_data_update_stats(self):
+        data = {
+                "descr": "update_stats",
+                "level": self._current_level,
+                "nb_joueurs": len(self._all_players),
+        }
+        player: Player
+        for id, player in self._all_players.items():
+            data["life"+str(id)] = "Life : " + str(player._life_pt) if player._alive else "Dead"
+            data["gold"+str(id)] = "Gold : " + str(player._money)
+            data["score"+str(id)] = "Score : " + str(player._score)
+        
+        return [
+            data,
+            {"foo": "bar"}
+        ]

@@ -90,6 +90,19 @@ window.addEventListener("load", (event) => {
         socket.emit("move", {ident: player_id, dx:1, dy:0});
     };
 
+    var btn_sauvegarde = document.getElementById("btn_sauvegarde");
+    btn_sauvegarde.onclick = function(e) {
+        socket.emit("sauvegarder", {})
+        var cell_id = "evenements";
+            var span_to_modif = document.getElementById(cell_id);
+            span_to_modif.textContent = "Sauvegarde effectuée !";
+    }
+
+    var btn_charger = document.getElementById("btn_charger");
+    btn_charger.onclick = function(e) {
+        socket.emit("charger", {})
+    }
+
     socket.on("response", function(data){
         // console.log(data);
         for( var i=0; i<2; i++){
@@ -109,10 +122,16 @@ window.addEventListener("load", (event) => {
                 var span_to_modif = document.getElementById(cell_id);
                 var numéro = parseInt(data[i].ident)+1;
                 span_to_modif.textContent = "Bienvenue Joueur n°"+ numéro;
+                if (numéro > 1) {
+                    btn_sauvegarde.style = "display:none";
+                    btn_charger.style = "display:none";
+                }
 
                 if(data[i].ident == player_id || player_id == -1) {
                     // do nothing
                 }else {
+                    // on enlève les boutons de sauvegarde
+                    
                     // on ajoute les lignes d'informations d'un nouveau joueur
                     addInfoLine(data[i].ident)
                     // et on le place sur le terrain
@@ -253,6 +272,40 @@ window.addEventListener("load", (event) => {
                     }
                 }
 
+            }
+            else if (data[i].descr === "update_stats") {
+                var cell_id = "evenements";
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = "Sauvegarde restorée !";
+
+                var cell_id = "currrent_level";
+                var span_to_modif = document.getElementById(cell_id);
+                span_to_modif.textContent = "Niveau " + data[i].level;
+                console.log("ici")
+
+                for (let j=0; j<data[i].nb_joueurs; i++) {
+                    console.log("joueur ",j, " restauré");
+                    var cell_id = "score" + String(j);
+                    var span_to_modif = document.getElementById(cell_id);
+                    span_to_modif.textContent = data[i]["score"+String(j)];
+
+
+                    var cell_id = "respawn" + String(j);
+                    var span_to_modif = document.getElementById(cell_id);
+                    if (data[i]["life"+String(j)] === "Dead") {
+                        span_to_modif.style= "display:inline";
+                    } else {
+                        span_to_modif.style= "display:none";
+                    }
+                    var cell_id = "vie" +  String(j);
+                    var span_to_modif = document.getElementById(cell_id);
+                    span_to_modif.textContent = data[i]["life"+String(j)];
+
+                    var cell_id = "gold" + String(j);
+                    var span_to_modif = document.getElementById(cell_id);
+                    span_to_modif.textContent = data[i]["gold"+String(j)];
+
+                }
             }
         }
     });

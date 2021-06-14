@@ -2,6 +2,8 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO
 from game_backend import Game
 
+import pickle
+
 app = Flask(__name__)
 socketio = SocketIO(app)
 game = Game()
@@ -88,6 +90,29 @@ def load_next_level_data(json, methods=["GET", "POST"]):
     data = game.build_data_next_level_terrain()
 
     socketio.emit("response", data)
+
+@socketio.on("sauvegarder")
+def save_game_state(json, methods=["GET", "POST"]):
+    if game._nb_players == 0:
+        print("Saving game...")
+        sauvegarde_jeu = pickle.dumps(game)
+        with open("backup/my_backup", "wb") as file:
+            file.write(sauvegarde_jeu)
+
+@socketio.on("charger")
+def load_game_state(json, methods=["GET", "POST"]):
+    global game
+    if game._nb_players == 0:
+        print("Loading game...")
+        with open("backup/my_backup", "rb") as file:
+            sauvegarde_jeu = file.read()
+        game = pickle.loads(sauvegarde_jeu)
+
+    data = game.build_data_next_level_terrain()
+    socketio.emit("response", data)
+    data = game.build_data_update_stats()
+    socketio.emit("response", data)
+
 
 
 if __name__=="__main__":
