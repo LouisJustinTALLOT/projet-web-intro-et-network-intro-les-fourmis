@@ -82,8 +82,9 @@ def on_respan(json, methods=["GET", "POST"]):
 
 @socketio.on("next_level_data_please")
 def load_next_level_data(json, methods=["GET", "POST"]):
-
-    game.new_map()
+    if not game._current_level in game._dict_level_genere.keys():
+        game.new_map()
+        game._dict_level_genere[game._current_level] = True
     data = game.build_data_next_level_terrain()
 
     socketio.emit("response", data)

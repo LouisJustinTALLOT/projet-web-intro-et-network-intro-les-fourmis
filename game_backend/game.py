@@ -45,6 +45,8 @@ class Game:
 
         self.find_empty_pos(entity=self._next_level) 
 
+        self._dict_level_genere = {1: True}
+
     def add_new_player(self):
         symbol = "@0"
         new_player = Player(self._nb_players + 1, symbol)
