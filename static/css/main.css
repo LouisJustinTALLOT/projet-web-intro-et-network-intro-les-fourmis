@@ -38,8 +38,8 @@ body{
     grid-auto-rows: 35px;
     grid-gap: 5px;
     max-width:120px; 
-    margin-right: 30px;
-    margin-left: 20px;
+    margin-right: 19px;
+    margin-left: 11px;
 }
 
 .keypad_btn{
